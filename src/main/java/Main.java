@@ -5,10 +5,8 @@ public class Main {
     public static void main(String[] args) {
         //ArrayList<PuestoDeTrabajo> lista = new ArrayList<>();
         //path del csv
-        String archivo ="C:\\Users\\Lenovo\\IdeaProjects\\Manejo-de-Bolsa-de-Trabajo\\src\\Hoja de cálculo sin título - Hoja 1.csv";
-        //
-        String linea = "";
-        //
+        String archivo ="src/Hoja de cálculo sin título - Hoja 1.csv";
+        String linea;
         String separador = ",";
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))){
             while((linea = br.readLine()) != null){
