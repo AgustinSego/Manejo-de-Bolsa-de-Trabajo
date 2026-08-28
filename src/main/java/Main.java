@@ -6,6 +6,7 @@ public class Main {
         ArrayList<String> keysTrabajo = new ArrayList<>();
         HashMap<String, ArrayList<PuestoDeTrabajo>> mapaPuestoTrabajo = new HashMap<>();
 
+        //lectura de csv´s
         leerCsv(mapaPuestoTrabajo, keysTrabajo, "src/Puestos de trabajo.csv");
         mostrar(mapaPuestoTrabajo, keysTrabajo);
     }
