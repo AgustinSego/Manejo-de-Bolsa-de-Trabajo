@@ -1,9 +1,16 @@
 public class Postulante {
     private String nombre;
-    private String rut;
     private String campoLaboral;
+    private String rut;
     private int experencia;
     //private int edad;
+
+    public Postulante(String nombre, String campoLaboral, String rut,  int experiencia){
+        this.nombre = nombre;
+        this.rut = rut;
+        this.campoLaboral = campoLaboral;
+        this.experencia = experiencia;
+    }
 
     public void setNombre(String nombre){this.nombre=nombre;}
     public void setRut(String rut){this.rut=rut;}
