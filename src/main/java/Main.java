@@ -12,16 +12,44 @@ public class Main {
         ArrayList<String> keysPostulantes = new ArrayList<>();
         HashMap<String, ArrayList<Postulante>> mapaPostulante = new HashMap<>();
 
+        Scanner leer = new Scanner(System.in);
+
+        System.out.println("Bienvenido");
+        System.out.println("Seleccione la forma en la que ver el programa");
+        System.out.println("1) ventana");
+        System.out.println("2) Consola");
+
+        int opcion = leer.nextInt();
+
+        if(opcion == 1){
+            Ventana bolsaVentana = new Ventana();
+            bolsaVentana.setVisible(true);
+        }else if(opcion == 2){
+            ejecutarPorConsola();
+        }
+
         //lectura de csv´s
+        // si no hay o no requiere experiencia se coloca 0
         leerCsv(mapaPuestoTrabajo,
                 keysTrabajo,
                 "src/Puestos de trabajo.csv",
                 1,
                 datos -> new PuestoDeTrabajo(datos[0], datos[1], datos[2], Integer.parseInt(datos[3].trim()), Integer.parseInt(datos[4].trim()))
         );
-        mostrar(mapaPuestoTrabajo, keysTrabajo);
+
+        leerCsv(mapaPostulante,
+                keysPostulantes,
+                "src/Postulantes.csv",
+                1,
+                datos -> new Postulante(datos[0], datos[1], datos[2], Integer.parseInt(datos[3].trim()), Integer.parseInt(datos[4].trim()), Integer.parseInt(datos[5].trim()))
+        );
+        //mostrar(mapaPuestoTrabajo, keysTrabajo);
+    }
+
+    public static void ejecutarPorConsola(){
 
     }
+
     public static <T> void leerCsv(HashMap<String, ArrayList<T>> mapa,
                                    ArrayList<String> keys,
                                    String path,
