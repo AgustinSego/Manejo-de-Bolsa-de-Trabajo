@@ -6,7 +6,5 @@ public class Ventana extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//al cerrar la ventana se corta el programa
         setTitle("Bolsa de Trabajo");//titulo
         setLocationRelativeTo(null);//centrar
-
-
     }
 }

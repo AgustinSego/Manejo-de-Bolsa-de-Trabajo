@@ -2,7 +2,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class ManejoPuestos implements InterfazGestion <PuestoDeTrabajo>{
-
     @Override
     public void eliminar(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa) {
 
@@ -25,6 +24,7 @@ public class ManejoPuestos implements InterfazGestion <PuestoDeTrabajo>{
 
     @Override
     public String buscar(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa) {
+
         return "";
     }
 }
