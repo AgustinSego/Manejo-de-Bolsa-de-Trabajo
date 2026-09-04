@@ -23,7 +23,7 @@ public class ManejoPuestos implements InterfazGestion <PuestoDeTrabajo>{
     }
 
     @Override
-    public String buscar(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa) {
+    public String buscar(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keysTrabajo, String trabajo) {
 
         return "";
     }

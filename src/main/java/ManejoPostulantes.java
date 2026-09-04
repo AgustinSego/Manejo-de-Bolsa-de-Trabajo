@@ -23,7 +23,7 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
     }
 
     @Override
-    public String buscar(HashMap<String, ArrayList<Postulante>> mapa) {
+    public String buscar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keysPostulantes, String nombre) {
         return "";
     }
 }

@@ -6,5 +6,5 @@ public interface InterfazGestion<T> {
     void agregar(HashMap<String, ArrayList<T>> mapa);
     void mostrar(HashMap<String, ArrayList<T>>mapa);
     void edicion(HashMap<String, ArrayList<T>> mapa);
-    String buscar(HashMap<String, ArrayList<T>> mapa);
+    String buscar(HashMap<String, ArrayList<T>> mapa, ArrayList<String> keys, String nombre);
 }
