@@ -43,11 +43,43 @@ public class Main {
                 1,
                 datos -> new Postulante(datos[0], datos[1], datos[2], Integer.parseInt(datos[3].trim()), Integer.parseInt(datos[4].trim()), Integer.parseInt(datos[5].trim()))
         );
-        //mostrar(mapaPuestoTrabajo, keysTrabajo);
     }
 
     public static void ejecutarPorConsola(){
+        ManejoPostulantes pos = new ManejoPostulantes();
+        ManejoPuestos Emp = new  ManejoPuestos();
 
+        Scanner leer = new Scanner(System.in);
+
+        System.out.println("##########################################");
+        System.out.println("GESTOR DE BOLSA DE TRABAJO");
+        System.out.println("##########################################");
+
+        String opcion, subOpcion;
+        do
+        {
+            System.out.println("ingrese una opcion:");
+            System.out.println("1) Agregar");
+            System.out.println("2) Mostrar");
+            System.out.println("3) Editar");
+            System.out.println("4) Eliminar");
+            System.out.println("5) Buscar)");
+            System.out.println("6) Salir");
+
+            opcion = leer.next();
+
+            if(opcion.equals("1")){
+
+            }else if(opcion.equals("2")){
+
+            }else if(opcion.equals("3")){
+
+            }else if(opcion.equals("4")){
+
+            }else if(opcion.equals("5")){
+
+            }
+        }while(!opcion.equals("6"));
     }
 
     public static <T> void leerCsv(HashMap<String, ArrayList<T>> mapa,

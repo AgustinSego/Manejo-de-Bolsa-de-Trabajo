@@ -30,10 +30,6 @@ public class Postulante {
     public int getEdad(){return edad;}
     public int getSueldoPrevisto(){return sueldoPrevisto;}
 
-    public String mostrarPostulanteInfoPersonal(){
-        return nombre + " " +  campoLaboral + " " + rut ;
-    }
-    public String mostrarPostulanteInfoVancante(){
-        return experiencia + " " + sueldoPrevisto + " " + edad;
-    }
+    public void mostrarPostulanteInfoPersonal(){System.out.println(nombre + " " +  campoLaboral + " " + rut) ;}
+    public void mostrarPostulanteInfoVancante(){System.out.println(experiencia + " " + sueldoPrevisto + " " + edad);}
 }

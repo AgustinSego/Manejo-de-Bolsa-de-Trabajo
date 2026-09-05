@@ -26,4 +26,7 @@ public class PuestoDeTrabajo {
     public String getCampoLaboralRequerido(){return campoLaboralRequerido;}
     public int getSueldo(){return sueldo;}
     public int getExperienciaRequerida(){return experenciaRequerida;}
+
+    public void mostrarEmpresaInfoPersonal() {System.out.println(nombreEmpresa + " " +  nombreVacante + " " + campoLaboralRequerido);}
+    public void mostrarEmpresaInfoVacante() {System.out.println(sueldo + " " + experenciaRequerida);}
 }

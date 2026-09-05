@@ -6,7 +6,7 @@ public interface InterfazGestion<T> {
 
     void agregar(HashMap<String, ArrayList<T>> mapa, T objeto);
 
-    void mostrar(HashMap<String, ArrayList<T>>mapa);
+    void mostrar(HashMap<String, ArrayList<T>>mapa, ArrayList<String> keys);
 
     void edicion(HashMap<String, ArrayList<T>> mapa, String nombre);
 

@@ -8,7 +8,7 @@ public class ManejoPuestos implements InterfazGestion <PuestoDeTrabajo>{
     @Override //agrega una vacante
     public void agregar(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, PuestoDeTrabajo vacante) {}
 
-    //@Override //muestra todas las vacantes
+    @Override //muestra todas las vacantes
     public void mostrar(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keysTrabajo)
     {
         for (String k : keysTrabajo)
@@ -17,24 +17,23 @@ public class ManejoPuestos implements InterfazGestion <PuestoDeTrabajo>{
 
             for (PuestoDeTrabajo puesto : lista)
             {
-                System.out.println(puesto.getNombreEmpresa() + " | " + puesto.getNombreVacante());
-                System.out.println("Sueldo : " + puesto.getSueldo());
-                System.out.println("Años de experiencia requeridos : " + puesto.getExperienciaRequerida());
-                System.out.println("Campo laboral requerido : " + puesto.getCampoLaboralRequerido());
-                System.out.println();
+                puesto.mostrarEmpresaInfoPersonal();
+                puesto.mostrarEmpresaInfoVacante();
             }
         }
     }
     // ESTA HAGO YO
-
-    @Override //cambia el nombre de una vacante
+    @Override//cambia el nombre de una vacante
     public void edicion(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, String vacante) {}
 
     //ejemplo overload
     //public void edicion(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, int sueldo) {}
 
     @Override //toda la info de la empresa (todas las vacantes)
-    public void buscarList(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keys, String nombre){}
+    public void buscarList(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keys, String nombre)
+    {
+        System.out.println("hola");
+    }
     // ESTA HAGO YO
 
     @Override //todas las empresas para una vacante

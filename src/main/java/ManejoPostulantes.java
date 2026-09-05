@@ -11,7 +11,7 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
     public void agregar(HashMap<String, ArrayList<Postulante>> mapa, Postulante persona){}
 
     @Override //mostrar todos los postulantes
-    public void mostrar(HashMap<String, ArrayList<Postulante>> mapa) {}
+    public void mostrar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys) {}
 
     @Override // cambia el nombre de un postulante
     public void edicion(HashMap<String, ArrayList<Postulante>> mapa, String nombre) {}
@@ -35,8 +35,9 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             int cont = 1;
             for(Postulante p: postulante){
                 System.out.println("vacante: " + cont);
-                System.out.println(p.mostrarPostulanteInfoPersonal());
-                System.out.println(p.mostrarPostulanteInfoVancante());
+                p.mostrarPostulanteInfoPersonal();
+                p.mostrarPostulanteInfoVancante();
+                System.out.println();
 
                 cont++;
             }
@@ -52,8 +53,9 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             int cont = 1;
             for(Postulante p: lista){
                 System.out.println("Postulante N°: " + cont);
-                System.out.println(p.mostrarPostulanteInfoPersonal());
-                System.out.println(p.mostrarPostulanteInfoVancante());
+                p.mostrarPostulanteInfoPersonal();
+                p.mostrarPostulanteInfoVancante();
+                System.out.println();
 
                 cont++;
             }
