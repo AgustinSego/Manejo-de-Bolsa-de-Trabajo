@@ -20,10 +20,10 @@ public class GestorBolsaTrabajo {
 
         for (Postulante pos : candidatos)
         {
-            if (pos.getExperencia() >= puesto.getExperienciaRequerida()
+            if (pos.getExperiencia() >= puesto.getExperienciaRequerida()
                 && pos.getSueldoPrevisto() <= puesto.getSueldo())
 
-                if (mejor == null || pos.getExperencia() > mejor.getExperencia()) mejor = pos;
+                if (mejor == null || pos.getExperiencia() > mejor.getExperiencia()) mejor = pos;
         }
 
         if (mejor == null)

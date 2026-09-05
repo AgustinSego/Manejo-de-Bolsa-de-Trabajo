@@ -69,14 +69,62 @@ public class Main {
             opcion = leer.next();
 
             if(opcion.equals("1")){
+                System.out.println("1) Agregar  un postulante");
+                System.out.println("2) Agregar una vacante");
 
+                subOpcion = leer.next();
+                if(subOpcion.equals("1")){
+
+                }else if(subOpcion.equals("2")){
+
+                }
             }else if(opcion.equals("2")){
+                System.out.println("1) Mostrar postulantes");
+                System.out.println("1) Mostrar vacantes");
 
+                subOpcion = leer.next();
+                if(subOpcion.equals("1")){
+
+                }else if(subOpcion.equals("2")){
+
+                }
             }else if(opcion.equals("3")){
+                System.out.println("1) Editar nombre de un postulante");
+                System.out.println("2) Editar nombre de una empresa");
 
+                subOpcion = leer.next();
+                if(subOpcion.equals("1")){
+
+                }else if(subOpcion.equals("2")){
+
+                }
             }else if(opcion.equals("4")){
+                System.out.println("1) Eliminar un postulante");
+                System.out.println("2) Eliminar una vacante");
+
+                subOpcion = leer.next();
+                if(subOpcion.equals("1")){
+
+                }else if(subOpcion.equals("2")){
+
+                }
 
             }else if(opcion.equals("5")){
+                System.out.println("1) Buscar un postulante");
+                System.out.println("2) Buscar postulantes por vacantes");
+                System.out.println("3) Buscar informacion empresa");
+                System.out.println("4) Buscar empresa por vacante");
+
+                subOpcion = leer.next();
+                if(subOpcion.equals("1")){
+
+                }else if(subOpcion.equals("2")){
+
+                }else if(subOpcion.equals("3")){
+
+                }else if(subOpcion.equals("4")){
+
+                }
 
             }
         }while(!opcion.equals("6"));
