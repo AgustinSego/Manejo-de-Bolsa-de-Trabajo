@@ -19,6 +19,7 @@ public class ManejoPuestos implements InterfazGestion <PuestoDeTrabajo>{
             {
                 puesto.mostrarEmpresaInfoPersonal();
                 puesto.mostrarEmpresaInfoVacante();
+                System.out.println();
             }
         }
     }
@@ -30,13 +31,40 @@ public class ManejoPuestos implements InterfazGestion <PuestoDeTrabajo>{
     //public void edicion(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, int sueldo) {}
 
     @Override //toda la info de la empresa (todas las vacantes)
-    public void buscarList(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keys, String nombre)
+    public void buscarList(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keysTrabajo, String nombre)
     {
-        System.out.println("hola");
+        for (String k : keysTrabajo)
+        {
+            ArrayList<PuestoDeTrabajo> lista = mapa.get(k);
+
+            for (PuestoDeTrabajo puesto : lista)
+            {
+                if (puesto.getNombreEmpresa().equals(nombre))
+                {
+                    puesto.mostrarEmpresaInfoPersonal();
+                    puesto.mostrarEmpresaInfoVacante();
+                    System.out.println();
+                }
+            }
+        }
     }
-    // ESTA HAGO YO
 
     @Override //todas las empresas para una vacante
-    public void buscarMap(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keys, String nombre){}
-    // ESTA HAGO YO
+    public void buscarMap(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keysTrabajo, String nombre)
+    {
+        for (String k : keysTrabajo)
+        {
+            ArrayList<PuestoDeTrabajo> lista = mapa.get(k);
+
+            for (PuestoDeTrabajo puesto : lista)
+            {
+                if (puesto.getCampoLaboralRequerido().equals(nombre))
+                {
+                    puesto.mostrarEmpresaInfoPersonal();
+                    puesto.mostrarEmpresaInfoVacante();
+                    System.out.println();
+                }
+            }
+        }
+    }
 }
