@@ -8,7 +8,7 @@ public class PuestoDeTrabajo {
     public PuestoDeTrabajo(String nombreEmpresa, String nombreVacante, String campoLaboralRequerido,
                            int sueldo, int experenciaRequerida){
         this.nombreEmpresa = nombreEmpresa;
-        this.nombreVacante =nombreVacante;
+        this.nombreVacante = nombreVacante;
         this.campoLaboralRequerido = campoLaboralRequerido;
         this.sueldo = sueldo;
         this.experenciaRequerida = experenciaRequerida;
