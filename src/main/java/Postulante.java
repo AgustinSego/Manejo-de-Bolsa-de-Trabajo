@@ -2,7 +2,7 @@ public class Postulante {
     private String nombre;
     private String campoLaboral;
     private String rut;
-    private int experencia;
+    private int experiencia;
     private int edad;
     private int sueldoPrevisto;
 
@@ -11,7 +11,7 @@ public class Postulante {
         this.nombre = nombre;
         this.campoLaboral = campoLaboral;
         this.rut = rut;
-        this.experencia = experiencia;
+        this.experiencia = experiencia;
         this.edad = edad;
         this.sueldoPrevisto = sueldoPrevisto;
     }
@@ -26,7 +26,14 @@ public class Postulante {
     public String getNombre(){return nombre;}
     public String getRut(){return rut;}
     public String getCampoLaboral(){return campoLaboral;}
-    public int getExperencia(){return experencia;}
+    public int getExperiencia(){return experiencia;}
     public int getEdad(){return edad;}
     public int getSueldoPrevisto(){return sueldoPrevisto;}
+
+    public String mostrarPostulanteInfoPersonal(){
+        return nombre + " " +  campoLaboral + " " + rut ;
+    }
+    public String mostrarPostulanteInfoVancante(){
+        return experiencia + " " + sueldoPrevisto + " " + edad;
+    }
 }

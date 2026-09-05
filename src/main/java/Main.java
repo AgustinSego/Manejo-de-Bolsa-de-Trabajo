@@ -8,7 +8,7 @@ public class Main {
         ArrayList<String> keysTrabajo = new ArrayList<>();
         HashMap<String, ArrayList<PuestoDeTrabajo>> mapaPuestoTrabajo = new HashMap<>();
 
-        //postulantes, clave campo laboral
+        //postulantes, clave campo laboral requerido
         ArrayList<String> keysPostulantes = new ArrayList<>();
         HashMap<String, ArrayList<Postulante>> mapaPostulante = new HashMap<>();
 
@@ -78,20 +78,5 @@ public class Main {
                 }
             }
         }catch (IOException e){e.printStackTrace();}
-    }
-
-    public static void mostrar(HashMap<String, ArrayList<PuestoDeTrabajo>> map, ArrayList<String> keys){
-        for(String clave: keys){
-            ArrayList<PuestoDeTrabajo> lista = map.get(clave);
-
-            System.out.println("Puesto de trabajo: "+ clave);
-
-            for(PuestoDeTrabajo puesto: lista){
-                System.out.println("Empresa: " + puesto.getNombreEmpresa() +" || Campo laboral requerido: " + puesto.getCampoLaboralRequerido());
-                System.out.println("Sueldo: " + puesto.getSueldo() + " || Experencia requerida: " + puesto.getExperienciaRequerida());
-                System.out.println();
-            }
-
-        }
     }
 }
