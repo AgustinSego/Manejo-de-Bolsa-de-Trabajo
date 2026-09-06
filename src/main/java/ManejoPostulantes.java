@@ -1,21 +1,93 @@
-import sun.plugin.viewer.frame.WNetscapeEmbeddedFrame;
-
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.io.*;
 
 public class ManejoPostulantes implements InterfazGestion<Postulante> {
     @Override //elimina un postulante
-    public void eliminar(HashMap<String, ArrayList<Postulante>> mapa, String postulante){}
+    public void eliminar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String postulante){
+        for(String key: keys){
+
+            ArrayList<Postulante> postulantes = mapa.get(key);
+
+            for(Postulante p: postulantes){
+                if(p.getNombre().equals(postulante)){
+                    postulantes.remove(p);
+                }
+            }
+        }
+
+        File ArchivoOriginal = new File("src/Postulantes.csv");
+        File ArchivoTemporal = new File("src/Temporal.csv");
+
+        String identificador = postulante;
+
+        try{
+            BufferedReader lectura = new BufferedReader(new FileReader(ArchivoOriginal));
+            BufferedWriter escribir = new BufferedWriter(new FileWriter(ArchivoTemporal));
+
+            String linea;
+
+            while ((linea = lectura.readLine()) != null){
+                if(!linea.contains(identificador)){
+                    escribir.write(linea);
+                    escribir.newLine();
+                }
+            }
+            lectura.close();
+            escribir.close();
+
+            ArchivoOriginal.delete();
+            ArchivoTemporal.renameTo(ArchivoOriginal);
+
+        }catch(Exception e){
+            System.err.println("Error al eliminar el postulante");
+        }
+    }
 
     @Override //agrega un postulante
-    public void agregar(HashMap<String, ArrayList<Postulante>> mapa, Postulante persona){}
+    public void agregar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, Postulante persona){
+        String clave = persona.getCampoLaboral();
+        ArrayList<Postulante> lista = mapa.get(clave);
+        lista.add(persona);
+        keys.add(clave);
+
+
+        String path = "src/Postulantes.csv";
+        String nuevaFila = persona.info();
+
+        try (FileWriter fw = new FileWriter(nuevaFila)){
+            fw.write(nuevaFila);
+            System.out.println("Postulante agregado exitosamente");
+
+        } catch (Exception e) {
+            System.err.println("Error al agregar postulante");
+        }
+
+
+    }
 
     @Override //mostrar todos los postulantes
-    public void mostrar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys) {}
+    public void mostrar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys){
+        for (String key : keys) {
 
-    @Override // cambia el nombre de un postulante
-    public void edicion(HashMap<String, ArrayList<Postulante>> mapa, String nombre) {}
+            ArrayList<Postulante> postulantes = mapa.get(key);
 
+            for (Postulante postulante : postulantes) {
+                postulante.mostrarPostulanteInfoPersonal();
+                postulante.mostrarPostulanteInfoVancante();
+                System.out.println(postulante.getNombre());
+            }
+        }
+    }
+
+    @Override // cambia el nombre de un postulante o cambiar el sueldo
+    public void edicion(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String nombre, String nombreCambiar){
+
+    }
+
+    public void edicion(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String nombre, int sueldoPrevistoCambiar){
+
+    }
 
     @Override //toda la info del postulante (puede tener mas de una postulacion)
     public void buscarList(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keysPostulante, String nombrePostulante){

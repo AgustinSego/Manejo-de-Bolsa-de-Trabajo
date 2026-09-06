@@ -3,10 +3,10 @@ import java.util.ArrayList;
 
 public class ManejoPuestos implements InterfazGestion <PuestoDeTrabajo>{
     @Override //elimina una vacante
-    public void eliminar(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, String vacante) {}
+    public void eliminar(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keys, String vacante){}
 
     @Override //agrega una vacante
-    public void agregar(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, PuestoDeTrabajo vacante) {}
+    public void agregar(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keys, PuestoDeTrabajo vacante){}
 
     @Override //muestra todas las vacantes
     public void mostrar(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keysTrabajo)
@@ -24,11 +24,14 @@ public class ManejoPuestos implements InterfazGestion <PuestoDeTrabajo>{
         }
     }
     // ESTA HAGO YO
-    @Override//cambia el nombre de una vacante
-    public void edicion(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, String vacante) {}
+    @Override//cambia el nombre de una empresa
+    public void edicion(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keys, String vacante, String vacanteCambiar){
 
-    //ejemplo overload
-    //public void edicion(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, int sueldo) {}
+    }
+
+    public void edicion(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keys, String vacante, int sueldoCambiar){
+
+    }
 
     @Override //toda la info de la empresa (todas las vacantes)
     public void buscarList(HashMap<String, ArrayList<PuestoDeTrabajo>> mapa, ArrayList<String> keysTrabajo, String nombre)

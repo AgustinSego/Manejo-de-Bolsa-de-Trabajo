@@ -15,14 +15,14 @@ public class Postulante {
         this.edad = edad;
         this.sueldoPrevisto = sueldoPrevisto;
     }
-    /*
+
     public void setNombre(String nombre){this.nombre=nombre;}
     public void setRut(String rut){this.rut=rut;}
     public void setCampoLaboral(String campoLab){this.campoLaboral=campoLab;}
-    public void setExperencia(int experencia){this.experencia=experencia;}
+    public void setExperencia(int experencia){this.experiencia=experencia;}
     public void setEdad(int edad){this.edad=edad;}
     public void setSueldoPrevisto(int sueldoPrevisto){this.sueldoPrevisto = sueldoPrevisto;}
-    */
+
     public String getNombre(){return nombre;}
     public String getRut(){return rut;}
     public String getCampoLaboral(){return campoLaboral;}
@@ -32,4 +32,5 @@ public class Postulante {
 
     public void mostrarPostulanteInfoPersonal(){System.out.println(nombre + " " +  campoLaboral + " " + rut) ;}
     public void mostrarPostulanteInfoVancante(){System.out.println(experiencia + " " + sueldoPrevisto + " " + edad);}
+    public String info(){return nombre + ", " + campoLaboral + ", " + rut + ", " + experiencia + ", " + edad + ", " + sueldoPrevisto;}
 }

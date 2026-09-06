@@ -12,22 +12,6 @@ public class Main {
         ArrayList<String> keysPostulantes = new ArrayList<>();
         HashMap<String, ArrayList<Postulante>> mapaPostulante = new HashMap<>();
 
-        Scanner leer = new Scanner(System.in);
-
-        System.out.println("Bienvenido");
-        System.out.println("Seleccione la forma en la que ver el programa");
-        System.out.println("1) ventana");
-        System.out.println("2) Consola");
-
-        int opcion = leer.nextInt();
-
-        if(opcion == 1){
-            Ventana bolsaVentana = new Ventana();
-            bolsaVentana.setVisible(true);
-        }else if(opcion == 2){
-            ejecutarPorConsola();
-        }
-
         //lectura de csv´s
         // si no hay o no requiere experiencia se coloca 0
         leerCsv(mapaPuestoTrabajo,
@@ -43,9 +27,31 @@ public class Main {
                 1,
                 datos -> new Postulante(datos[0], datos[1], datos[2], Integer.parseInt(datos[3].trim()), Integer.parseInt(datos[4].trim()), Integer.parseInt(datos[5].trim()))
         );
+
+        Scanner leer = new Scanner(System.in);
+
+        System.out.println("Bienvenido");
+        System.out.println("Seleccione la forma en la que ver el programa");
+        System.out.println("1) ventana");
+        System.out.println("2) Consola");
+
+        int opcion = leer.nextInt();
+
+        if(opcion == 1){
+            Ventana bolsaVentana = new Ventana();
+            bolsaVentana.setVisible(true);
+        }else if(opcion == 2){
+            ejecutarPorConsola(mapaPuestoTrabajo, keysTrabajo, mapaPostulante, keysPostulantes);
+        }
+
+
     }
 
-    public static void ejecutarPorConsola(){
+    public static void ejecutarPorConsola(HashMap<String, ArrayList<PuestoDeTrabajo>> mapaPuestoTrabajo,
+                                          ArrayList<String> keysTrabajo, HashMap<String,
+                                          ArrayList<Postulante>> mapaPostulante,
+                                          ArrayList<String> keysPostulantes) {
+
         ManejoPostulantes pos = new ManejoPostulantes();
         ManejoPuestos Emp = new  ManejoPuestos();
 
@@ -63,7 +69,7 @@ public class Main {
             System.out.println("2) Mostrar");
             System.out.println("3) Editar");
             System.out.println("4) Eliminar");
-            System.out.println("5) Buscar)");
+            System.out.println("5) Buscar");
             System.out.println("6) Salir");
 
             opcion = leer.next();
@@ -80,7 +86,7 @@ public class Main {
                 }
             }else if(opcion.equals("2")){
                 System.out.println("1) Mostrar postulantes");
-                System.out.println("1) Mostrar vacantes");
+                System.out.println("2) Mostrar vacantes");
 
                 subOpcion = leer.next();
                 if(subOpcion.equals("1")){
