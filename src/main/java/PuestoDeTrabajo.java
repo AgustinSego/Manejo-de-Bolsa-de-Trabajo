@@ -14,13 +14,13 @@ public class PuestoDeTrabajo {
         this.experenciaRequerida = experenciaRequerida;
 
     }
-    /*
+
     public void setNombreVacante (String nombreVacante){this.nombreVacante = nombreVacante;}
     public void setCampoLaboralRequerido (String campoLaboralRequerido){this.campoLaboralRequerido = campoLaboralRequerido;}
     public void setSueldo (int sueldo){this.sueldo = sueldo;}
     public void setExperenciaRequerida (int experenciaRequerida){this.experenciaRequerida = experenciaRequerida;}
     public void setNombreEmpresa(String nombreEmpresa) {this.nombreEmpresa = nombreEmpresa;}
-    */
+
     public String getNombreEmpresa() {return nombreEmpresa;}
     public String getNombreVacante(){return nombreVacante;}
     public String getCampoLaboralRequerido(){return campoLaboralRequerido;}

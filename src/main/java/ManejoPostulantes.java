@@ -83,10 +83,83 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
     @Override // cambia el nombre de un postulante o cambiar el sueldo
     public void edicion(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String nombre, String nombreCambiar){
 
+        File ArchivoOriginal = new File("src/Postulantes.csv");
+        File ArchivoTemporal = new File("src/Temporal.csv");
+
+        try{
+            BufferedReader lectura = new BufferedReader(new FileReader(ArchivoOriginal));
+            BufferedWriter escribir = new BufferedWriter(new FileWriter(ArchivoTemporal));
+
+            String linea;
+            while ((linea = lectura.readLine()) != null){
+                String[] celdas = linea.split(",");
+
+                if(celdas[0].trim().equals(nombre)){
+                    celdas[0] =  nombreCambiar;
+                    linea = String.join(",", celdas);
+                }
+
+                escribir.write(linea);
+                escribir.newLine();
+            }
+
+            ArchivoOriginal.delete();
+            ArchivoTemporal.renameTo(ArchivoOriginal);
+
+        }catch(Exception e){
+            System.err.println("Error al editar el postulante");
+            return;
+        }
+
+        for(String key: keys){
+            ArrayList<Postulante> postulantes = mapa.get(key);
+            for (Postulante postulante : postulantes) {
+                if(postulante.getNombre().equals(nombre)){
+                    postulante.setNombre(nombreCambiar);
+                }
+            }
+        }
+
     }
 
     public void edicion(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String nombre, int sueldoPrevistoCambiar){
+        File ArchivoOriginal = new File("src/Postulantes.csv");
+        File ArchivoTemporal = new File("src/Temporal.csv");
 
+        try{
+            BufferedReader lectura = new BufferedReader(new FileReader(ArchivoOriginal));
+            BufferedWriter escribir = new BufferedWriter(new FileWriter(ArchivoTemporal));
+
+            String linea;
+            while ((linea = lectura.readLine()) != null){
+                String[] celdas = linea.split(",");
+
+                if(celdas[0].trim().equals(nombre)){
+                    celdas[5] =  String.valueOf(sueldoPrevistoCambiar);
+                    linea = String.join(",", celdas);
+                }
+
+                escribir.write(linea);
+                escribir.newLine();
+            }
+
+            ArchivoOriginal.delete();
+            ArchivoTemporal.renameTo(ArchivoOriginal);
+
+        }catch(Exception e){
+            System.err.println("Error al editar el postulante");
+            return;
+        }
+
+        for(String key: keys){
+            ArrayList<Postulante> postulantes = mapa.get(key);
+
+            for (Postulante postulante : postulantes) {
+                if(postulante.getNombre().equals(nombre)){
+                    postulante.setSueldoPrevisto(sueldoPrevistoCambiar);
+                }
+            }
+        }
     }
 
     @Override //toda la info del postulante (puede tener mas de una postulacion)
