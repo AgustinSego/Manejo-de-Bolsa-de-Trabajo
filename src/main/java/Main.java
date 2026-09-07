@@ -61,52 +61,59 @@ public class Main {
         System.out.println("GESTOR DE BOLSA DE TRABAJO");
         System.out.println("##########################################");
 
-        String opcion, subOpcion;
+        String opcion, subOpcion, entrada;
         do
         {
             System.out.println("ingrese una opcion:");
-            System.out.println("1) Agregar");
-            System.out.println("2) Mostrar");
-            System.out.println("3) Editar");
-            System.out.println("4) Eliminar");
-            System.out.println("5) Buscar");
-            System.out.println("6) Salir");
+            System.out.println("1) Agregar.");
+            System.out.println("2) Mostrar.");
+            System.out.println("3) Editar.");
+            System.out.println("4) Eliminar.");
+            System.out.println("5) Buscar.");
+            System.out.println("6) Salir.");
 
             opcion = leer.next();
 
             if(opcion.equals("1")){
-                System.out.println("1) Agregar  un postulante");
-                System.out.println("2) Agregar una vacante");
+                System.out.println("1) Agregar un postulante.");
+                System.out.println("2) Agregar una vacante.");
 
                 subOpcion = leer.next();
                 if(subOpcion.equals("1")){
+
 
                 }else if(subOpcion.equals("2")){
 
                 }
             }else if(opcion.equals("2")){
-                System.out.println("1) Mostrar postulantes");
-                System.out.println("2) Mostrar vacantes");
+                System.out.println("1) Mostrar postulantes.");
+                System.out.println("2) Mostrar vacantes.");
 
                 subOpcion = leer.next();
                 if(subOpcion.equals("1")){
-
+                    pos.mostrar(mapaPostulante,  keysPostulantes);
                 }else if(subOpcion.equals("2")){
 
                 }
             }else if(opcion.equals("3")){
-                System.out.println("1) Editar nombre de un postulante");
-                System.out.println("2) Editar nombre de una empresa");
+                System.out.println("1) Editar nombre de un postulante.");
+                System.out.println("2) Editar sueldo de un postulante.");
+                System.out.println("3) Editar nombre de una empresa.");
+                System.out.println("4) Editar sueldo de un empresa.");
 
                 subOpcion = leer.next();
                 if(subOpcion.equals("1")){
 
                 }else if(subOpcion.equals("2")){
 
+                }else if(subOpcion.equals("3")){
+
+                }else if(subOpcion.equals("4")){
+
                 }
             }else if(opcion.equals("4")){
-                System.out.println("1) Eliminar un postulante");
-                System.out.println("2) Eliminar una vacante");
+                System.out.println("1) Eliminar un postulante.");
+                System.out.println("2) Eliminar una vacante.");
 
                 subOpcion = leer.next();
                 if(subOpcion.equals("1")){
@@ -116,15 +123,21 @@ public class Main {
                 }
 
             }else if(opcion.equals("5")){
-                System.out.println("1) Buscar un postulante");
-                System.out.println("2) Buscar postulantes por vacantes");
-                System.out.println("3) Buscar informacion empresa");
-                System.out.println("4) Buscar empresa por vacante");
+                System.out.println("1) Buscar un postulante.");
+                System.out.println("2) Buscar postulantes por vacantes.");
+                System.out.println("3) Buscar informacion empresa.");
+                System.out.println("4) Buscar empresa por vacante.");
 
                 subOpcion = leer.next();
                 if(subOpcion.equals("1")){
+                    System.out.println("Ingrese el nombre del postulante:");
+                    entrada = leer.next();
+                    pos.buscarList(mapaPostulante, keysPostulantes, entrada);
 
                 }else if(subOpcion.equals("2")){
+                    System.out.println("Ingrese la vacante:");
+                    entrada = leer.next();
+                    pos.buscarMap(mapaPostulante, keysPostulantes, entrada);
 
                 }else if(subOpcion.equals("3")){
 
