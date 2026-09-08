@@ -5,23 +5,30 @@ import java.io.*;
 public class ManejoPostulantes implements InterfazGestion<Postulante> {
     @Override //elimina un postulante
     public void eliminar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String postulante){
-        for(String key: keys){
+        try{
+            boolean encontrado = false;
+            for(String key: keys){
 
-            ArrayList<Postulante> postulantes = mapa.get(key);
+                ArrayList<Postulante> postulantes = mapa.get(key);
 
-            for(Postulante p: postulantes){
-                if(p.getNombre().equals(postulante)){
-                    postulantes.remove(p);
+                for(int i = 0; i < postulantes.size(); i++ ){
+                    if(postulantes.get(i).getNombre().equals(postulante)){
+                        postulantes.remove(i);
+                        encontrado = true;
+                        break;
+                    }
                 }
             }
-        }
+            if(!encontrado){
+               throw new postulanteNoEncontrado("El postulante" + postulante + "no existe");
+            }
 
-        File ArchivoOriginal = new File("src/Postulantes.csv");
-        File ArchivoTemporal = new File("src/Temporal.csv");
+            File ArchivoOriginal = new File("src/Postulantes.csv");
+            File ArchivoTemporal = new File("src/Temporal.csv");
 
-        String identificador = postulante;
+            String identificador = postulante;
 
-        try{
+
             BufferedReader lectura = new BufferedReader(new FileReader(ArchivoOriginal));
             BufferedWriter escribir = new BufferedWriter(new FileWriter(ArchivoTemporal));
 
@@ -38,6 +45,9 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
 
             ArchivoOriginal.delete();
             ArchivoTemporal.renameTo(ArchivoOriginal);
+        
+        }catch(PostulanteNoEncontradoException e){
+            System.err.println("Error: " + e.getMessage());
 
         }catch(Exception e){
             System.err.println("Error al eliminar el postulante");
@@ -46,21 +56,31 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
 
     @Override //agrega un postulante
     public void agregar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, Postulante persona){
-        String clave = persona.getCampoLaboral();
-        ArrayList<Postulante> lista = mapa.get(clave);
-        lista.add(persona);
-        keys.add(clave);
+        try{
+            if(persona.getNombre() == null ||persona.getNombre().trim().isEmpty() ){
+                throw new DatosInvalidos ("nombre del postulante no puede estar vacio");
+            }
+            if(persona.getCampoLaboral() == null ||persona.getCampoLaboral().trim().isEmpty() ){
+                throw new DatosInvalidos ("nombre del postulante no puede estar vacio");
+            }
+            String clave = persona.getCampoLaboral();
+            ArrayList<Postulante> lista = mapa.get(clave);
+            lista.add(persona);
+            keys.add(clave);
 
 
-        String path = "src/Postulantes.csv";
-        String nuevaFila = persona.info();
+            String path = "src/Postulantes.csv";
+            String nuevaFila = persona.info();
 
-        try (FileWriter fw = new FileWriter(nuevaFila)){
-            fw.write(nuevaFila);
-            System.out.println("Postulante agregado exitosamente");
+            try (FileWriter fw = new FileWriter(nuevaFila)){
+                fw.write(nuevaFila);
+                System.out.println("Postulante agregado exitosamente");
+                }
+        }catch (DatosPostulanteInvalidosException e) {
 
-        } catch (Exception e) {
-            System.err.println("Error al agregar postulante");
+            System.err.println("Error: " + e.getMessage());
+        }catch (Exception e) {
+            System.err.println("Error al agregar postulante" + e.getMessage);
         }
 
 
