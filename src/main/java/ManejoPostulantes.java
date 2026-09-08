@@ -93,9 +93,10 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             ArrayList<Postulante> postulantes = mapa.get(key);
 
             for (Postulante postulante : postulantes) {
+                System.out.println("###########################################");
                 postulante.mostrarPostulanteInfoPersonal();
                 postulante.mostrarPostulanteInfoVancante();
-                System.out.println(postulante.getNombre());
+                System.out.println("###########################################");
             }
         }
     }
@@ -195,8 +196,6 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
         }
         if (postulante.isEmpty()){System.out.println("No existe el postulante");}
         else{
-            System.out.println(nombrePostulante + ":");
-
             int cont = 1;
             for(Postulante p: postulante){
                 System.out.println("vacante: " + cont);
