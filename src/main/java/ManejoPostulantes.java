@@ -20,7 +20,7 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
                 }
             }
             if(!encontrado){
-               throw new postulanteNoEncontrado("El postulante" + postulante + "no existe");
+               throw new PostulanteNoEncontradoException("El postulante" + postulante + "no existe");
             }
 
             File ArchivoOriginal = new File("src/Postulantes.csv");
@@ -58,10 +58,10 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
     public void agregar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, Postulante persona){
         try{
             if(persona.getNombre() == null ||persona.getNombre().trim().isEmpty() ){
-                throw new DatosInvalidos ("nombre del postulante no puede estar vacio");
+                throw new DatosInvalidosException ("nombre del postulante no puede estar vacio");
             }
             if(persona.getCampoLaboral() == null ||persona.getCampoLaboral().trim().isEmpty() ){
-                throw new DatosInvalidos ("nombre del postulante no puede estar vacio");
+                throw new DatosInvalidosException ("nombre del postulante no puede estar vacio");
             }
             String clave = persona.getCampoLaboral();
             ArrayList<Postulante> lista = mapa.get(clave);
@@ -76,11 +76,11 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
                 fw.write(nuevaFila);
                 System.out.println("Postulante agregado exitosamente");
                 }
-        }catch (DatosPostulanteInvalidosException e) {
+        }catch (DatosInvalidosException e) {
 
             System.err.println("Error: " + e.getMessage());
         }catch (Exception e) {
-            System.err.println("Error al agregar postulante" + e.getMessage);
+            System.err.println("Error al agregar postulante" + e.getMessage());
         }
 
 
