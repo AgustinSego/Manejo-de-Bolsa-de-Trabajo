@@ -32,5 +32,5 @@ public class Postulante {
 
     public void mostrarPostulanteInfoPersonal(){System.out.println("Nombre: " + nombre + ", Vacante: " + campoLaboral + ", rut: " + rut) ;}
     public void mostrarPostulanteInfoVancante(){System.out.println("Experiencia: " + experiencia + ", Sueldo solicitado: " + sueldoSolicitado + ", Edad: " + edad);}
-    public String info(){return nombre + ", " + campoLaboral + ", " + rut + ", " + experiencia + ", " + edad + ", " + sueldoSolicitado;}
+    public String info(){return nombre + "," + campoLaboral + "," + rut + "," + experiencia + "," + edad + "," + sueldoSolicitado;}
 }

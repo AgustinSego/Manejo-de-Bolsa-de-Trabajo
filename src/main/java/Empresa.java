@@ -29,5 +29,5 @@ public class Empresa {
 
     public void mostrarEmpresaInfoPersonal() {System.out.println("Empresa: "+ nombreEmpresa + ", Vacante: " +  nombreVacante + ", Campo laboran requerido: " + campoLaboralRequerido);}
     public void mostrarEmpresaInfoVacante() {System.out.println("Sueldo" +sueldo + ", Experiencia requerida " + experenciaRequerida);}
-    public String info(){return nombreEmpresa + ", " + nombreVacante + ", " + campoLaboralRequerido + ", " + sueldo + "," + experenciaRequerida ;}
+    public String info(){return nombreEmpresa + "," + nombreVacante + "," + campoLaboralRequerido + "," + sueldo + "," + experenciaRequerida ;}
 }

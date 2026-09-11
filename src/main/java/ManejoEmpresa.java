@@ -52,7 +52,7 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
 
     //elimina una empresa
     public void eliminar(HashMap<String, ArrayList<Empresa>> mapa, String empresa, ArrayList<String> keys){
-        File ArchivoOriginal = new File("src/Postulantes.csv");
+        File ArchivoOriginal = new File("src/Puestos de trabajo.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
 
         try(BufferedReader lectura = new BufferedReader(new FileReader(ArchivoOriginal));
@@ -136,12 +136,12 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
                 bw.write(nuevaFila);
                 bw.newLine();
 
-                System.out.println("Postulante agregado exitosamente");
+                System.out.println("Vacante agregada exitosamente");
                 }
         }catch(DatosInvalidosException e){
                 System.out.println(e.getMessage());
         }catch (Exception e) {
-                System.err.println("Error al agregar postulante" + e.getMessage());
+                System.err.println("Error al agregar vacante" + e.getMessage());
         }
        
     }

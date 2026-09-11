@@ -54,6 +54,7 @@ public class Main {
 
         ManejoPostulantes pos = new ManejoPostulantes();
         ManejoEmpresa emp = new ManejoEmpresa();
+        GestorBolsaTrabajo ges = new GestorBolsaTrabajo(); // instancia gestor
 
         Scanner leer = new Scanner(System.in);
 
@@ -70,7 +71,8 @@ public class Main {
             System.out.println("3) Editar.");
             System.out.println("4) Eliminar.");
             System.out.println("5) Buscar.");
-            System.out.println("6) Salir.");
+            System.out.println("6) Realizar Contratación.");
+            System.out.println("7) Salir.");
 
             opcion = leer.next();
 
@@ -130,7 +132,8 @@ public class Main {
                     System.out.println("1) Mostrar postulantes.");
                     System.out.println("2) Mostrar Empresas.");
                     System.out.println("3) Mostrar Vacantes disponibles.");
-                    System.out.println("4) Salir.");
+                    System.out.println("4) Mostrar historial de contrataciones."); // NUEVA OPCIÓN
+                    System.out.println("5) Salir.");
 
                     subOpcion = leer.next();
                     switch (subOpcion) {
@@ -146,6 +149,9 @@ public class Main {
                                 System.out.println(vacante);
                             }
                             System.out.println("#############################################");
+                            break;
+                        case "4":
+                            ges.mostrarHistorialContrataciones();
                             break;
                     }
                     break;
@@ -285,8 +291,46 @@ public class Main {
                     }
 
                     break;
+
+                case "6":
+                    System.out.println("Ingrese el nombre de la empresa que ofrece la vacante:");
+                    String nombreEmpresaBuscada = leer.next().toLowerCase();
+
+                    System.out.println("Ingrese el nombre de la vacante a llenar:");
+                    String nombreVacanteBuscada = leer.next().toLowerCase();
+
+                    Empresa empresaObjetivo = null;
+
+                    // Buscamos el objeto Empresa que coincida
+                    if (mapaEmpresa.containsKey(nombreVacanteBuscada)) {
+                        ArrayList<Empresa> lista = mapaEmpresa.get(nombreVacanteBuscada);
+                        for (Empresa e : lista) {
+                            if (e.getNombreEmpresa().equals(nombreEmpresaBuscada)) {
+                                empresaObjetivo = e;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (empresaObjetivo != null) {
+                        Postulante contratado = ges.realizarContratacion(
+                                empresaObjetivo,
+                                mapaPostulante,
+                                keysPostulantes,
+                                mapaEmpresa,
+                                keysTrabajo
+                        );
+
+                        if (contratado != null) {
+                            System.out.println("¡Éxito! Se ha contratado a " + contratado.getNombre() + " para la vacante.");
+                        }
+
+                    } else {
+                        System.out.println("No se encontró la empresa o la vacante especificada.");
+                    }
+                    break;
             }
-        }while(!opcion.equals("6"));
+        }while(!opcion.equals("7"));
     }
 
     public static <T> void leerCsv(HashMap<String, ArrayList<T>> mapa,
@@ -302,7 +346,7 @@ public class Main {
             while((linea = br.readLine()) != null){
                 String []datos = linea.split(separador);
 
-                String clave = datos[indiceClave];
+                String clave = datos[indiceClave].trim();
 
                 T objeto = creadorObjeto.apply(datos);
 
