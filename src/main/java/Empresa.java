@@ -1,11 +1,11 @@
-public class PuestoDeTrabajo {
+public class Empresa {
     private String nombreEmpresa;
     private String nombreVacante;
     private String campoLaboralRequerido;
     private int sueldo;
     private int experenciaRequerida;
 
-    public PuestoDeTrabajo(String nombreEmpresa, String nombreVacante, String campoLaboralRequerido,
+    public Empresa(String nombreEmpresa, String nombreVacante, String campoLaboralRequerido,
                            int sueldo, int experenciaRequerida){
         this.nombreEmpresa = nombreEmpresa;
         this.nombreVacante = nombreVacante;
@@ -27,6 +27,7 @@ public class PuestoDeTrabajo {
     public int getSueldo(){return sueldo;}
     public int getExperienciaRequerida(){return experenciaRequerida;}
 
-    public void mostrarEmpresaInfoPersonal() {System.out.println(nombreEmpresa + " " +  nombreVacante + " " + campoLaboralRequerido);}
-    public void mostrarEmpresaInfoVacante() {System.out.println(sueldo + " " + experenciaRequerida);}
+    public void mostrarEmpresaInfoPersonal() {System.out.println("Empresa: "+ nombreEmpresa + ", Vacante: " +  nombreVacante + ", Campo laboran requerido: " + campoLaboralRequerido);}
+    public void mostrarEmpresaInfoVacante() {System.out.println("Sueldo" +sueldo + ", Experiencia requerida " + experenciaRequerida);}
+    public String info(){return nombreEmpresa + ", " + nombreVacante + ", " + campoLaboralRequerido + ", " + sueldo + "," + experenciaRequerida ;}
 }

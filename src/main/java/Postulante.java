@@ -4,7 +4,7 @@ public class Postulante {
     private String rut;
     private int experiencia;
     private int edad;
-    private int sueldoPrevisto;
+    private int sueldoSolicitado;
 
     public Postulante(String nombre, String campoLaboral, String rut,
                       int experiencia, int edad, int sueldoPrevisto){
@@ -13,7 +13,7 @@ public class Postulante {
         this.rut = rut;
         this.experiencia = experiencia;
         this.edad = edad;
-        this.sueldoPrevisto = sueldoPrevisto;
+        this.sueldoSolicitado = sueldoPrevisto;
     }
 
     public void setNombre(String nombre){this.nombre=nombre;}
@@ -21,16 +21,16 @@ public class Postulante {
     public void setCampoLaboral(String campoLab){this.campoLaboral=campoLab;}
     public void setExperencia(int experencia){this.experiencia=experencia;}
     public void setEdad(int edad){this.edad=edad;}
-    public void setSueldoPrevisto(int sueldoPrevisto){this.sueldoPrevisto = sueldoPrevisto;}
+    public void setSueldoSolicitado(int sueldoPrevisto){this.sueldoSolicitado = sueldoPrevisto;}
 
     public String getNombre(){return nombre;}
     public String getRut(){return rut;}
     public String getCampoLaboral(){return campoLaboral;}
     public int getExperiencia(){return experiencia;}
     public int getEdad(){return edad;}
-    public int getSueldoPrevisto(){return sueldoPrevisto;}
+    public int getSueldoSolicitado(){return sueldoSolicitado;}
 
-    public void mostrarPostulanteInfoPersonal(){System.out.println(nombre + " " +  campoLaboral + " " + rut) ;}
-    public void mostrarPostulanteInfoVancante(){System.out.println(experiencia + " " + sueldoPrevisto + " " + edad);}
-    public String info(){return nombre + ", " + campoLaboral + ", " + rut + ", " + experiencia + ", " + edad + ", " + sueldoPrevisto;}
+    public void mostrarPostulanteInfoPersonal(){System.out.println("Nombre: " + nombre + ", Vacante: " + campoLaboral + ", rut: " + rut) ;}
+    public void mostrarPostulanteInfoVancante(){System.out.println("Experiencia: " + experiencia + ", Sueldo solicitado: " + sueldoSolicitado + ", Edad: " + edad);}
+    public String info(){return nombre + ", " + campoLaboral + ", " + rut + ", " + experiencia + ", " + edad + ", " + sueldoSolicitado;}
 }

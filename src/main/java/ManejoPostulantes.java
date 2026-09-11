@@ -3,19 +3,17 @@ import java.util.ArrayList;
 import java.io.*;
 
 public class ManejoPostulantes implements InterfazGestion<Postulante> {
+
     @Override //elimina un postulante
     public void eliminar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String postulante){
         try{
             boolean encontrado = false;
             for(String key: keys){
-
                 ArrayList<Postulante> postulantes = mapa.get(key);
-
-                for(int i = 0; i < postulantes.size(); i++ ){
-                    if(postulantes.get(i).getNombre().equals(postulante)){
-                        postulantes.remove(i);
+                if(postulantes != null){
+                    boolean borrado = postulantes.removeIf(p -> p.getNombre().equals(postulante));
+                    if (borrado){
                         encontrado = true;
-                        break;
                     }
                 }
             }
@@ -26,32 +24,32 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             File ArchivoOriginal = new File("src/Postulantes.csv");
             File ArchivoTemporal = new File("src/Temporal.csv");
 
-            String identificador = postulante;
+            try(BufferedReader lectura = new BufferedReader(new FileReader(ArchivoOriginal));
+                BufferedWriter escribir = new BufferedWriter(new FileWriter(ArchivoTemporal))){
 
+                String linea;
 
-            BufferedReader lectura = new BufferedReader(new FileReader(ArchivoOriginal));
-            BufferedWriter escribir = new BufferedWriter(new FileWriter(ArchivoTemporal));
+                while ((linea = lectura.readLine()) != null){
+                    String[] celdas = linea.split(",");
 
-            String linea;
-
-            while ((linea = lectura.readLine()) != null){
-                if(!linea.contains(identificador)){
-                    escribir.write(linea);
-                    escribir.newLine();
+                    if(!celdas[0].equals(postulante.trim())){
+                        escribir.write(linea);
+                        escribir.newLine();
+                    }
                 }
+            }catch(Exception e){
+                System.err.println("Error al eliminar el postulante");
+                return;
             }
-            lectura.close();
-            escribir.close();
 
             ArchivoOriginal.delete();
             ArchivoTemporal.renameTo(ArchivoOriginal);
+            System.out.println("Postulante eliminado exitosamente");
         
         }catch(PostulanteNoEncontradoException e){
             System.err.println("Error: " + e.getMessage());
-
-        }catch(Exception e){
-            System.err.println("Error al eliminar el postulante");
         }
+
     }
 
     @Override //agrega un postulante
@@ -63,24 +61,34 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             if(persona.getCampoLaboral() == null ||persona.getCampoLaboral().trim().isEmpty() ){
                 throw new DatosInvalidosException ("nombre del postulante no puede estar vacio");
             }
-            String clave = persona.getCampoLaboral();
-            ArrayList<Postulante> lista = mapa.get(clave);
-            lista.add(persona);
-            keys.add(clave);
 
+            if(!mapa.containsKey(persona.getCampoLaboral())){
+                ArrayList<Postulante> lista = new ArrayList<>();
+                lista.add(persona);
+                mapa.put (persona.getCampoLaboral(), lista);
+                keys.add(persona.getCampoLaboral());
+            }else{
+                String clave = persona.getCampoLaboral();
+                ArrayList<Postulante> lista = mapa.get(clave);
+                lista.add(persona);
+            }
 
             String path = "src/Postulantes.csv";
             String nuevaFila = persona.info();
 
-            try (FileWriter fw = new FileWriter(nuevaFila)){
-                fw.write(nuevaFila);
+            try (FileWriter fw = new FileWriter(path, true);
+                 BufferedWriter bw = new BufferedWriter(fw)){
+
+                bw.write(nuevaFila);
+                bw.newLine();
+
                 System.out.println("Postulante agregado exitosamente");
-                }
+            }catch (Exception e) {
+                System.err.println("Error al agregar postulante" + e.getMessage());
+            }
         }catch (DatosInvalidosException e) {
 
             System.err.println("Error: " + e.getMessage());
-        }catch (Exception e) {
-            System.err.println("Error al agregar postulante" + e.getMessage());
         }
 
 
@@ -140,10 +148,10 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
                 }
             }
         }
-
+        System.out.println("Se ha cambiado exitosamente el nombre del postulante");
     }
 
-    public void edicion(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String nombre, int sueldoPrevistoCambiar){
+    public void edicion(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String nombre, int sueldoSolicitadoCambiar, String vacante){
         File ArchivoOriginal = new File("src/Postulantes.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
 
@@ -155,8 +163,8 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             while ((linea = lectura.readLine()) != null){
                 String[] celdas = linea.split(",");
 
-                if(celdas[0].trim().equals(nombre)){
-                    celdas[5] =  String.valueOf(sueldoPrevistoCambiar);
+                if(celdas[0].trim().equals(nombre) && celdas[1].trim().equals(vacante)){
+                    celdas[5] =  String.valueOf(sueldoSolicitadoCambiar);
                     linea = String.join(",", celdas);
                 }
 
@@ -176,14 +184,15 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             ArrayList<Postulante> postulantes = mapa.get(key);
 
             for (Postulante postulante : postulantes) {
-                if(postulante.getNombre().equals(nombre)){
-                    postulante.setSueldoPrevisto(sueldoPrevistoCambiar);
+                if(postulante.getNombre().equals(nombre) && postulante.getCampoLaboral().equals(vacante)){
+                    postulante.setSueldoSolicitado(sueldoSolicitadoCambiar);
                 }
             }
         }
+        System.out.println("Se ha cambiado exitosamente el sueldo solicitado del postulante");
     }
 
-    @Override //toda la info del postulante (puede tener mas de una postulacion)
+    @Override //toda la info del postulante (puede tener más de una postulación)
     public void buscarList(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keysPostulante, String nombrePostulante){
         ArrayList<Postulante> postulante = new ArrayList<>();
         for(String clave: keysPostulante){
