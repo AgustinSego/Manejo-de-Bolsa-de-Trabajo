@@ -74,144 +74,217 @@ public class Main {
 
             opcion = leer.next();
 
-            if(opcion.equals("1")){
-                System.out.println("1) Agregar un postulante.");
-                System.out.println("2) Agregar una vacante.");
-                System.out.println("3) Salir.");
+            switch (opcion) {
+                case "1":
+                    System.out.println("1) Agregar un postulante.");
+                    System.out.println("2) Agregar una vacante.");
+                    System.out.println("3) Salir.");
 
-                subOpcion = leer.next();
-                if(subOpcion.equals("1")){
-                    System.out.println("Ingrese el nombre del postulante: ");
-                    String nombre  = leer.next().toLowerCase();
+                    subOpcion = leer.next();
+                    if (subOpcion.equals("1")) {
+                        System.out.println("Ingrese el nombre del postulante: ");
+                        String nombre = leer.next().toLowerCase();
 
-                    System.out.println("Ingrese la vacante de trabajo que desea el postulante: ");
-                    String vacante = leer.next().toLowerCase();
+                        System.out.println("Ingrese la vacante de trabajo que desea el postulante: ");
+                        String vacante = leer.next().toLowerCase();
 
-                    System.out.println("Ingrese el rut del postulante(eje: 11.111.111-1): ");
-                    String rut = leer.next();
+                        System.out.println("Ingrese el rut del postulante(eje: 11.111.111-1): ");
+                        String rut = leer.next();
 
-                    System.out.println("Ingrese la experiencia del postulante(si no tiene coloque 0): ");
-                    int exp = leer.nextInt();
+                        System.out.println("Ingrese la experiencia del postulante(si no tiene coloque 0): ");
+                        int exp = leer.nextInt();
 
-                    System.out.println("Ingrese la edad del postulante: ");
-                    int edad = leer.nextInt();
+                        System.out.println("Ingrese la edad del postulante: ");
+                        int edad = leer.nextInt();
 
-                    System.out.println("Ingrese el sueldo que solicita el postulante: ");
-                    int sueldo = leer.nextInt();
+                        System.out.println("Ingrese el sueldo que solicita el postulante: ");
+                        int sueldo = leer.nextInt();
 
-                    Postulante p = new Postulante(nombre,vacante,rut ,exp,edad,sueldo);
-                    //metodo de agregacion
-                    pos.agregar(mapaPostulante, keysPostulantes, p);
+                        Postulante p = new Postulante(nombre, vacante, rut, exp, edad, sueldo);
+                        //metodo de agregacion
+                        pos.agregar(mapaPostulante, keysPostulantes, p);
 
-                }else if(subOpcion.equals("2")){
-                    System.out.println("Para crear una vacante primero tiene que dar datos de la empresa");
-                    System.out.println("Ingrese el nombre de la empresa: ");
-                    String nombre = leer.next().toLowerCase();
+                    } else if (subOpcion.equals("2")) {
+                        System.out.println("Para crear una vacante primero tiene que dar datos de la empresa");
+                        System.out.println("Ingrese el nombre de la empresa: ");
+                        String nombre = leer.next().toLowerCase();
 
-                    System.out.println("Ingrese el nombre de la vacante(si no tiene coloque): ");
-                    String vacante = leer.next().toLowerCase();
+                        System.out.println("Ingrese el nombre de la vacante: ");
+                        String vacante = leer.next().toLowerCase();
 
-                    System.out.println("Ingrese el campo laboral requerido para la vacante: ");
-                    String campo = leer.next().toLowerCase();
+                        System.out.println("Ingrese el campo laboral requerido para la vacante: ");
+                        String campo = leer.next().toLowerCase();
 
-                    System.out.println("Ingrese el sueldo previsto para la vacante: ");
-                    int sueldo = leer.nextInt();
+                        System.out.println("Ingrese el sueldo previsto para la vacante: ");
+                        int sueldo = leer.nextInt();
 
-                    System.out.println("Ingrese la experiencia requerida(si no hay coloque 0): ");
-                    int experiencia = leer.nextInt();
+                        System.out.println("Ingrese la experiencia requerida(si no hay coloque 0): ");
+                        int experiencia = leer.nextInt();
 
-                    Empresa e = new Empresa(nombre, vacante, campo, sueldo, experiencia);
-                    //metodo de agregacion
-                    emp.agregar(mapaEmpresa, keysPostulantes, e);
-                }
-            }else if(opcion.equals("2")){
-                System.out.println("1) Mostrar postulantes.");
-                System.out.println("2) Mostrar Empresas.");
-                System.out.println("3) Mostrar Vacantes disponibles.");
-                System.out.println("4) Salir.");
+                        Empresa e = new Empresa(nombre, vacante, campo, sueldo, experiencia);
+                        //metodo de agregacion
+                        emp.agregar(mapaEmpresa, keysTrabajo, e);
+                    }
+                    break;
+                case "2":
+                    System.out.println("1) Mostrar postulantes.");
+                    System.out.println("2) Mostrar Empresas.");
+                    System.out.println("3) Mostrar Vacantes disponibles.");
+                    System.out.println("4) Salir.");
 
-                subOpcion = leer.next();
-                if(subOpcion.equals("1")){
-                    pos.mostrar(mapaPostulante,  keysPostulantes);
-                }else if(subOpcion.equals("2")){
-                    emp.mostrar(mapaEmpresa, keysPostulantes);
-                }else if(subOpcion.equals("3")){
-                    System.out.println("#############################################");
-                    for(String vacante: keysTrabajo){System.out.println(vacante);}
-                    System.out.println("#############################################");
-                }
-            }else if(opcion.equals("3")){
-                System.out.println("1) Editar nombre de un postulante.");
-                System.out.println("2) Editar sueldo de un postulante.");
-                System.out.println("3) Editar nombre de una empresa.");
-                System.out.println("4) Editar sueldo de un empresa por vacante.");
-                System.out.println("5) Salir.");
+                    subOpcion = leer.next();
+                    switch (subOpcion) {
+                        case "1":
+                            pos.mostrar(mapaPostulante, keysPostulantes);
+                            break;
+                        case "2":
+                            emp.mostrar(mapaEmpresa, keysTrabajo);
+                            break;
+                        case "3":
+                            System.out.println("#############################################");
+                            for (String vacante : keysTrabajo) {
+                                System.out.println(vacante);
+                            }
+                            System.out.println("#############################################");
+                            break;
+                    }
+                    break;
+                case "3":
+                    System.out.println("1) Editar nombre de un postulante.");
+                    System.out.println("2) Editar sueldo sueldo solicitad de una vacante de un postulante.");
+                    System.out.println("3) Editar nombre de una empresa.");
+                    System.out.println("4) Editar sueldo previsto de una empresa por vacante.");
+                    System.out.println("5) Salir.");
 
-                subOpcion = leer.next();
-                if(subOpcion.equals("1")){
-                    System.out.println("Ingrese el nombre del postulante: ");
-                    String nombre = leer.next().toLowerCase();
+                    subOpcion = leer.next();
+                    switch (subOpcion) {
+                        case "1": {
+                            System.out.println("Ingrese el nombre del postulante: ");
+                            String nombre = leer.next().toLowerCase();
 
-                    System.out.println("Ingrese el nombre nuevo para el postulante");
-                    String nombreCambiar = leer.next().toLowerCase();
+                            System.out.println("Ingrese el nombre nuevo para el postulante");
+                            String nombreCambiar = leer.next().toLowerCase();
 
-                    //metodo edicion 1
-                    pos.edicion(mapaPostulante, keysPostulantes, nombre, nombreCambiar);
-                }else if(subOpcion.equals("2")){
-                    System.out.println("Ingrese el nombre del postulante: ");
-                    String nombre = leer.next().toLowerCase();
+                            //metodo edicion 1
+                            pos.edicion(mapaPostulante, keysPostulantes, nombre, nombreCambiar);
 
-                    System.out.println("Ingrese el nombre de la vacante: ");
-                    String vacante = leer.next().toLowerCase();
+                            break;
+                        }
+                        case "2": {
+                            System.out.println("Ingrese el nombre del postulante: ");
+                            String nombre = leer.next().toLowerCase();
 
-                    System.out.println("Ingrese el nuevo sueldo solicitado:");
-                    int sueldo = leer.nextInt();
+                            System.out.println("Ingrese el nombre de la vacante: ");
+                            String vacante = leer.next().toLowerCase();
 
-                    //metodo de edicion 2 (overload)
-                    pos.edicion(mapaPostulante, keysPostulantes, nombre, sueldo, vacante);
-                }else if(subOpcion.equals("3")){
+                            System.out.println("Ingrese el nuevo sueldo solicitado:");
+                            int sueldo = leer.nextInt();
 
+                            //metodo de edicion 2 (overload)
+                            pos.edicion(mapaPostulante, keysPostulantes, nombre, sueldo, vacante);
 
-                }else if(subOpcion.equals("4")){
+                            break;
+                        }
+                        case "3": {
+                            System.out.println("Ingrese el nombre de la empresa: ");
+                            String nombre = leer.next().toLowerCase();
 
-                }
-            }else if(opcion.equals("4")){
-                System.out.println("1) Eliminar un postulante.");
-                System.out.println("2) Eliminar una vacante.");
-                System.out.println("3) Eliminar una empresa.");
-                System.out.println("4) Salir.");
+                            System.out.println("Ingrese el nombre nuevo para la empresa: ");
+                            String nombreNuevo = leer.next().toLowerCase();
 
-                subOpcion = leer.next();
-                if(subOpcion.equals("1")){
+                            emp.edicion(mapaEmpresa, keysTrabajo, nombre, nombreNuevo);
 
-                }else if(subOpcion.equals("2")){
+                            break;
+                        }
+                        case "4": {
+                            System.out.println("Ingrese el nombre de la empresa: ");
+                            String nombre = leer.next().toLowerCase();
 
-                }
+                            System.out.println("Ingrese la vacante a la que quiera cambiar el sueldo: ");
+                            String vacante = leer.next().toLowerCase();
 
-            }else if(opcion.equals("5")){
-                System.out.println("1) Buscar un postulante.");
-                System.out.println("2) Buscar postulantes por vacantes.");
-                System.out.println("3) Buscar informacion empresa.");
-                System.out.println("4) Buscar empresa por vacante.");
-                System.out.println("5) Salir.");
+                            System.out.println("Ingrese el nuevo sueldo previsto: ");
+                            int sueldo = leer.nextInt();
 
-                subOpcion = leer.next();
-                if(subOpcion.equals("1")){
-                    System.out.println("Ingrese el nombre del postulante:");
-                    entrada = leer.next();
-                    pos.buscarList(mapaPostulante, keysPostulantes, entrada);
+                            emp.edicion(mapaEmpresa, keysTrabajo, nombre, sueldo, vacante);
 
-                }else if(subOpcion.equals("2")){
-                    System.out.println("Ingrese la vacante:");
-                    entrada = leer.next();
-                    pos.buscarMap(mapaPostulante, keysPostulantes, entrada);
+                            break;
+                        }
+                    }
+                    break;
+                case "4":
+                    System.out.println("1) Eliminar un postulante.");
+                    System.out.println("2) Eliminar una vacante.");
+                    System.out.println("3) Eliminar una empresa.");
+                    System.out.println("4) Salir.");
 
-                }else if(subOpcion.equals("3")){
+                    subOpcion = leer.next();
+                    switch (subOpcion) {
+                        case "1": {
+                            System.out.println("Ingrese el nombre del postulante: ");
+                            String nombre = leer.next().toLowerCase();
 
-                }else if(subOpcion.equals("4")){
+                            pos.eliminar(mapaPostulante, keysPostulantes, nombre);
 
-                }
+                            break;
+                        }
+                        case "2": {
+                            System.out.println("Ingrese el nombre de la vacante: ");
+                            String nombre = leer.next().toLowerCase();
 
+                            emp.eliminar(mapaEmpresa, keysTrabajo, nombre);
+
+                            break;
+                        }
+                        case "3": {
+                            System.out.println("Ingrese el nombre de la empresa: ");
+                            String nombre = leer.next().toLowerCase();
+
+                            emp.eliminar(mapaEmpresa, nombre, keysTrabajo);
+                            break;
+                        }
+                    }
+
+                    break;
+                case "5":
+                    System.out.println("1) Buscar un postulante.");
+                    System.out.println("2) Buscar postulantes por vacantes.");
+                    System.out.println("3) Buscar información de una empresa.");
+                    System.out.println("4) Buscar empresa por vacante.");
+                    System.out.println("5) Salir.");
+
+                    subOpcion = leer.next();
+                    switch (subOpcion) {
+                        case "1":
+                            System.out.println("Ingrese el nombre del postulante:");
+                            entrada = leer.next().toLowerCase();
+
+                            pos.buscarList(mapaPostulante, keysPostulantes, entrada);
+
+                            break;
+                        case "2":
+                            System.out.println("Ingrese la vacante:");
+                            entrada = leer.next().toLowerCase();
+
+                            pos.buscarMap(mapaPostulante, keysPostulantes, entrada);
+
+                            break;
+                        case "3":
+                            System.out.println("Ingrese el nombre de la empresa: ");
+                            String nombre = leer.next().toLowerCase();
+
+                            emp.buscarList(mapaEmpresa, keysTrabajo, nombre);
+
+                            break;
+                        case "4":
+                            System.out.println("Ingrese la vacante: ");
+                            String vacante = leer.next().toLowerCase();
+
+                            emp.buscarMap(mapaEmpresa, keysTrabajo, vacante);
+                            break;
+                    }
+
+                    break;
             }
         }while(!opcion.equals("6"));
     }
