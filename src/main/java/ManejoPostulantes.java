@@ -18,7 +18,7 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
                 }
             }
             if(!encontrado){
-               throw new PostulanteNoEncontradoException("El postulante" + postulante + "no existe");
+               throw new ElementosNoEncontradosException("El postulante" + postulante + "no existe");
             }
 
             File ArchivoOriginal = new File("src/Postulantes.csv");
@@ -46,7 +46,7 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             ArchivoTemporal.renameTo(ArchivoOriginal);
             System.out.println("Postulante eliminado exitosamente");
         
-        }catch(PostulanteNoEncontradoException e){
+        }catch(ElementosNoEncontradosException e){
             System.err.println("Error: " + e.getMessage());
         }
 
@@ -59,9 +59,20 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
                 throw new DatosInvalidosException ("nombre del postulante no puede estar vacio");
             }
             if(persona.getCampoLaboral() == null ||persona.getCampoLaboral().trim().isEmpty() ){
-                throw new DatosInvalidosException ("nombre del postulante no puede estar vacio");
+                throw new DatosInvalidosException ("campo laboral del postulante no puede estar vacio");
             }
-
+            if(persona.getRut() == null ||persona.getRut().trim().isEmpty() ){
+                throw new DatosInvalidosException ("El rut del postulante no puede estar vacio");
+            }
+            if(persona.getExperiencia() < 0 ){
+                throw new DatosInvalidosException ("La experencia del postulante no puedeser menor a 0");
+            }
+            if(persona.getEdad() < 18 ){
+                throw new DatosInvalidosException ("La edad  del postulante no puede ser menor a 18");
+            }
+            if(persona.getSueldoSolicitado() < 0 ){
+                throw new DatosInvalidosException ("El sueldo solicidato del postulante no puede ser menor a 0");
+            }
             if(!mapa.containsKey(persona.getCampoLaboral())){
                 ArrayList<Postulante> lista = new ArrayList<>();
                 lista.add(persona);
@@ -83,15 +94,13 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
                 bw.newLine();
 
                 System.out.println("Postulante agregado exitosamente");
-            }catch (Exception e) {
-                System.err.println("Error al agregar postulante" + e.getMessage());
-            }
+                }
+
         }catch (DatosInvalidosException e) {
-
             System.err.println("Error: " + e.getMessage());
+        }catch (Exception e) {
+                System.err.println("Error al agregar postulante: " + e.getMessage());
         }
-
-
     }
 
     @Override //mostrar todos los postulantes

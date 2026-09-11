@@ -14,14 +14,28 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
 
 
             String linea;
+            boolean encontrado = false;
+
             while ((linea = lectura.readLine()) != null){
                 String[] celdas = linea.split(",");
 
-                if(!celdas[1].equals(vacante.trim())){
+                if(celdas[1].equals(vacante.trim())){
+                    encontrado = true;
+                }
+                else{
                     escribir.write(linea);
                     escribir.newLine();
                 }
             }
+            if(!encontrado){
+                throw new ElementosNoEncontradosException("el vacante" +vacante + "no existe " );}
+                
+
+        }catch(ElementosNoEncontradosException e){  
+
+               System.out.println(e.getMessage());
+               return;
+        
         }catch(Exception e){
             System.out.println("Error al eliminar la vacante.");
             return;
@@ -33,9 +47,9 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
 
         mapa.remove(vacante);
         keys.remove(vacante);
+    }       
 
 
-    }
     //elimina una empresa
     public void eliminar(HashMap<String, ArrayList<Empresa>> mapa, String empresa, ArrayList<String> keys){
         File ArchivoOriginal = new File("src/Postulantes.csv");
@@ -45,15 +59,25 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
             BufferedWriter escribir = new BufferedWriter(new FileWriter(ArchivoTemporal))){
 
             String linea;
+            boolean encontrado = false;
 
             while ((linea = lectura.readLine()) != null){
                 String[] celdas = linea.split(",");
 
-                if(!celdas[0].equals(empresa.trim())){
+                if(celdas[0].equals(empresa.trim())){
+                    encontrado = true;
+                }else{
                     escribir.write(linea);
                     escribir.newLine();
                 }
             }
+            
+            if(!encontrado){
+              throw new ElementosNoEncontradosException("le empresa" +empresa + "no existe" );
+            }
+        }catch(ElementosNoEncontradosException e){
+            System.out.println(e.getMessage());
+            return;
         }catch(Exception e){
             System.out.println("Error al eliminar la vacante.");
             return;
@@ -71,31 +95,55 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
     }
     @Override //agrega una vacante, la vacante nueva viene en Empresa
     public void agregar(HashMap<String, ArrayList<Empresa>> mapa, ArrayList<String> keys, Empresa empresa){
+        try{
+            if(empresa.getNombreVacante() == null || empresa.getNombreVacante().trim().isEmpty()) {
 
-        if(!mapa.containsKey(empresa.getNombreVacante())){
-            ArrayList<Empresa> lista = new ArrayList<>();
-            lista.add(empresa);
-            mapa.put (empresa.getNombreVacante(), lista);
-            keys.add(empresa.getNombreVacante());
-        }else{
-            String clave = empresa.getNombreVacante();
-            ArrayList<Empresa> lista = mapa.get(clave);
-            lista.add(empresa);
-        }
+                throw new DatosInvalidosException("El nombre de la vacante no puede estar vacío.");
+            }
+            if(empresa.getNombreEmpresa() == null || empresa.getNombreEmpresa().trim().isEmpty()) {
 
-        String path = "src/Puestos de trabajo.csv";
-        String nuevaFila = empresa.info();
+                throw new DatosInvalidosException("El nombre de la Empresa no puede estar vacío.");
+            }
+            if(empresa.getCampoLaboralRequerido() == null || empresa.getCampoLaboralRequerido().trim().isEmpty()) {
 
-        try (FileWriter fw = new FileWriter(path, true);
-             BufferedWriter bw = new BufferedWriter(fw)){
+                throw new DatosInvalidosException("El campo laboral no puede estar vacío.");
+            }
+            if(empresa.getSueldo() < 0) {
 
-            bw.write(nuevaFila);
-            bw.newLine();
+                throw new DatosInvalidosException("el sueldo no puede ser menor a 0");
+            }
+            if(empresa.getExperienciaRequerida() < 0) {
 
-            System.out.println("Postulante agregado exitosamente");
+                throw new DatosInvalidosException("La experencia requerida no puede ser menor a 0");
+            }
+            if(!mapa.containsKey(empresa.getNombreVacante())){
+                ArrayList<Empresa> lista = new ArrayList<>();
+                lista.add(empresa);
+                mapa.put (empresa.getNombreVacante(), lista);
+                keys.add(empresa.getNombreVacante());
+            }else{
+                String clave = empresa.getNombreVacante();
+                ArrayList<Empresa> lista = mapa.get(clave);
+                lista.add(empresa);
+            }
+
+            String path = "src/Puestos de trabajo.csv";
+            String nuevaFila = empresa.info();
+
+            try (FileWriter fw = new FileWriter(path, true);
+                 BufferedWriter bw = new BufferedWriter(fw)){
+
+                bw.write(nuevaFila);
+                bw.newLine();
+
+                System.out.println("Postulante agregado exitosamente");
+                }
+        }catch(DatosInvalidosException e){
+                System.out.println(e.getMessage());
         }catch (Exception e) {
-            System.err.println("Error al agregar postulante" + e.getMessage());
+                System.err.println("Error al agregar postulante" + e.getMessage());
         }
+       
     }
     @Override //muestra todas las vacantes
     public void mostrar(HashMap<String, ArrayList<Empresa>> mapa, ArrayList<String> keysTrabajo) {
