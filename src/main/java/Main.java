@@ -108,7 +108,7 @@ public class Main {
                     System.out.println("Ingrese el nombre de la empresa: ");
                     String nombre = leer.next().toLowerCase();
 
-                    System.out.println("Ingrese el nombre de la vacante(si no tiene coloque): ");
+                    System.out.println("Ingrese el nombre de la vacante: ");
                     String vacante = leer.next().toLowerCase();
 
                     System.out.println("Ingrese el campo laboral requerido para la vacante: ");
@@ -122,7 +122,7 @@ public class Main {
 
                     Empresa e = new Empresa(nombre, vacante, campo, sueldo, experiencia);
                     //metodo de agregacion
-                    emp.agregar(mapaEmpresa, keysPostulantes, e);
+                    emp.agregar(mapaEmpresa, keysTrabajo, e);
                 }
             }else if(opcion.equals("2")){
                 System.out.println("1) Mostrar postulantes.");
@@ -142,9 +142,9 @@ public class Main {
                 }
             }else if(opcion.equals("3")){
                 System.out.println("1) Editar nombre de un postulante.");
-                System.out.println("2) Editar sueldo de un postulante.");
+                System.out.println("2) Editar sueldo sueldo solicitad de una vacante de un postulante.");
                 System.out.println("3) Editar nombre de una empresa.");
-                System.out.println("4) Editar sueldo de un empresa por vacante.");
+                System.out.println("4) Editar sueldo previsto de una empresa por vacante.");
                 System.out.println("5) Salir.");
 
                 subOpcion = leer.next();
@@ -157,6 +157,7 @@ public class Main {
 
                     //metodo edicion 1
                     pos.edicion(mapaPostulante, keysPostulantes, nombre, nombreCambiar);
+
                 }else if(subOpcion.equals("2")){
                     System.out.println("Ingrese el nombre del postulante: ");
                     String nombre = leer.next().toLowerCase();
@@ -169,10 +170,27 @@ public class Main {
 
                     //metodo de edicion 2 (overload)
                     pos.edicion(mapaPostulante, keysPostulantes, nombre, sueldo, vacante);
-                }else if(subOpcion.equals("3")){
 
+                }else if(subOpcion.equals("3")){
+                    System.out.println("Ingrese el nombre de la empresa: ");
+                    String nombre = leer.next().toLowerCase();
+
+                    System.out.println("Ingrese el nombre nuevo para la empresa: ");
+                    String nombreNuevo = leer.next().toLowerCase();
+
+                    emp.edicion(mapaEmpresa, keysTrabajo, nombre, nombreNuevo);
 
                 }else if(subOpcion.equals("4")){
+                    System.out.println("Ingrese el nombre de la empresa: ");
+                    String nombre = leer.next().toLowerCase();
+
+                    System.out.println("Ingrese la vacante a la que quiera cambiar el sueldo: ");
+                    String vacante = leer.next().toLowerCase();
+
+                    System.out.println("Ingrese el nuevo sueldo previsto: ");
+                    int sueldo = leer.nextInt();
+
+                    emp.edicion(mapaEmpresa, keysTrabajo, nombre, sueldo, vacante);
 
                 }
             }else if(opcion.equals("4")){
@@ -183,33 +201,55 @@ public class Main {
 
                 subOpcion = leer.next();
                 if(subOpcion.equals("1")){
+                    System.out.println("Ingrese el nombre del postulante: ");
+                    String nombre = leer.next().toLowerCase();
+
+                    pos.eliminar(mapaPostulante, keysPostulantes, nombre);
 
                 }else if(subOpcion.equals("2")){
+                    System.out.println("Ingrese el nombre de la vacante: ");
+                    String nombre = leer.next().toLowerCase();
 
+                    emp.eliminar(mapaEmpresa, keysTrabajo, nombre);
+
+                }else if(subOpcion.equals("3")){
+                    System.out.println("Ingrese el nombre de la empresa: ");
+                    String nombre = leer.next().toLowerCase();
+
+                    emp.eliminar(mapaEmpresa, nombre,  keysTrabajo);
                 }
 
             }else if(opcion.equals("5")){
                 System.out.println("1) Buscar un postulante.");
                 System.out.println("2) Buscar postulantes por vacantes.");
-                System.out.println("3) Buscar informacion empresa.");
+                System.out.println("3) Buscar información de una empresa.");
                 System.out.println("4) Buscar empresa por vacante.");
                 System.out.println("5) Salir.");
 
                 subOpcion = leer.next();
                 if(subOpcion.equals("1")){
                     System.out.println("Ingrese el nombre del postulante:");
-                    entrada = leer.next();
+                    entrada = leer.next().toLowerCase();
+
                     pos.buscarList(mapaPostulante, keysPostulantes, entrada);
 
                 }else if(subOpcion.equals("2")){
                     System.out.println("Ingrese la vacante:");
-                    entrada = leer.next();
+                    entrada = leer.next().toLowerCase();
+
                     pos.buscarMap(mapaPostulante, keysPostulantes, entrada);
 
                 }else if(subOpcion.equals("3")){
+                    System.out.println("Ingrese el nombre de la empresa: ");
+                    String nombre = leer.next().toLowerCase();
+
+                    emp.buscarList(mapaEmpresa, keysTrabajo, nombre);
 
                 }else if(subOpcion.equals("4")){
+                    System.out.println("Ingrese la vacante: ");
+                    String vacante = leer.next().toLowerCase();
 
+                    emp.buscarMap(mapaEmpresa, keysTrabajo, vacante);
                 }
 
             }
