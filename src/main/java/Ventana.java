@@ -5,6 +5,14 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+/** 
+* Representa la ventana principal de la aplicación Bolsa de Trabajo. 
+* Permite al usuario realizar las distintas operaciones del sistema 
+* mediante una interfaz gráfica, como agregar, mostrar, editar, 
+* eliminar, buscar y realizar contrataciones.
+ */
+
 public class Ventana extends JFrame {
 
     private HashMap<String, ArrayList<Empresa>> mapaEmpresa;
@@ -15,7 +23,14 @@ public class Ventana extends JFrame {
 
     private ManejoPostulantes pos;
     private ManejoEmpresa emp;
-
+    /** 
+    * Crea la ventana principal y recibe las estructuras de datos 
+    * utilizadas para almacenar empresas y postulantes. 
+    * @param mapaEmpresa mapa que contiene las empresas agrupadas por vacante 
+    * @param keysTrabajo lista de claves de las vacantes 
+    * @param mapaPostulante mapa que contiene los postulantes agrupados por campo laboral 
+    * @param keysPostulantes lista de claves de los postulantes 
+    */
     public Ventana(
             HashMap<String, ArrayList<Empresa>> mapaEmpresa,
             ArrayList<String> keysTrabajo,
@@ -94,7 +109,9 @@ public class Ventana extends JFrame {
         });
     }
 
-
+    /** 
+    * Muestra el menú de opciones para agregar postulantes o vacantes. 
+    */
     private void menuAgregar() {
 
         String[] opciones = {
@@ -122,7 +139,9 @@ public class Ventana extends JFrame {
         }
     }
 
-
+    /** 
+    * Solicita los datos necesarios para crear y agregar un nuevo postulante. 
+    */
     private void agregarPostulante() {
 
         try {
@@ -241,7 +260,9 @@ public class Ventana extends JFrame {
         }
     }
 
-
+    /**
+     * Solicita los datos de una empresa y crea una nueva vacante. 
+    */
     private void agregarVacante() {
 
         try {
@@ -354,7 +375,10 @@ public class Ventana extends JFrame {
     }
 
 
-
+    /**
+    * Muestra las diferentes opciones para el usuario
+    * puede consultar. 
+    */
     private void menuMostrar() {
 
         String[] opciones = {
@@ -394,7 +418,9 @@ public class Ventana extends JFrame {
         }
     }
 
-
+    /** 
+    * Muestra la información de los postulantes registrados. 
+    */
     private void mostrarPostulantes() {
 
         String resultado = capturarSalida(() -> {
@@ -415,7 +441,9 @@ public class Ventana extends JFrame {
         );
     }
 
-
+    /**
+    * Muestra la información de las empresas registradas. 
+    */
     private void mostrarEmpresas() {
 
         String resultado = capturarSalida(() -> {
@@ -436,7 +464,9 @@ public class Ventana extends JFrame {
         );
     }
 
-
+    /** 
+    * Muestra las vacantes que se encuentran disponibles.
+     */
     private void mostrarVacantesDisponibles() {
 
         StringBuilder resultado = new StringBuilder();
@@ -460,7 +490,9 @@ public class Ventana extends JFrame {
         );
     }
 
-
+    /** 
+    * Muestra el historial de las contrataciones realizadas. 
+    */
     private void mostrarHistorialContrataciones() {
 
         GestorBolsaTrabajo gestor = new GestorBolsaTrabajo();
@@ -480,7 +512,10 @@ public class Ventana extends JFrame {
     }
 
 
-
+    /** 
+    * Muestra las opciones disponibles para modificar información 
+    * de postulantes y empresas. 
+    */
     private void menuEditar() {
 
         String[] opciones = {
@@ -520,7 +555,9 @@ public class Ventana extends JFrame {
         }
     }
 
-
+    /**
+    * Permite modificar el nombre de un postulante.
+    */
     private void editarNombrePostulante() {
 
         String nombre = JOptionPane.showInputDialog(
@@ -561,7 +598,9 @@ public class Ventana extends JFrame {
         );
     }
 
-
+    /** 
+    * Permite modificar el sueldo solicitado por un postulante. 
+    */
     private void editarSueldoPostulante() {
 
         try {
@@ -626,7 +665,9 @@ public class Ventana extends JFrame {
         }
     }
 
-
+    /** 
+    * Permite modificar el nombre de una empresa. 
+    */
     private void editarNombreEmpresa() {
 
         String nombre = JOptionPane.showInputDialog(
@@ -667,7 +708,9 @@ public class Ventana extends JFrame {
         );
     }
 
-
+    /** 
+    * Permite modificar el sueldo ofrecido para una vacante. 
+    */
     private void editarSueldoEmpresa() {
 
         try {
@@ -732,7 +775,9 @@ public class Ventana extends JFrame {
         }
     }
 
-
+    /** 
+    * Muestra las opciones para eliminar postulantes, vacantes o empresas. 
+    */
     private void menuEliminar() {
 
         String[] opciones = {
@@ -767,7 +812,9 @@ public class Ventana extends JFrame {
         }
     }
 
-
+    /** 
+    * Elimina un postulante seleccionado por el usuario. 
+    */
     private void eliminarPostulante() {
 
         String nombre = JOptionPane.showInputDialog(
@@ -805,7 +852,9 @@ public class Ventana extends JFrame {
         );
     }
 
-
+    /** 
+    * Elimina una vacante seleccionada por el usuario. 
+    */
     private void eliminarVacante() {
 
         String vacante = JOptionPane.showInputDialog(
@@ -843,7 +892,9 @@ public class Ventana extends JFrame {
         );
     }
 
-
+    /** 
+    * Elimina una empresa seleccionada por el usuario.
+    */
     private void eliminarEmpresa() {
 
         String empresa = JOptionPane.showInputDialog(
@@ -883,7 +934,10 @@ public class Ventana extends JFrame {
 
 
 
-
+    /** 
+    * Muestra las opciones disponibles para realizar búsquedas 
+    * dentro de la bolsa de trabajo. 
+    */
     private void menuBuscar() {
 
         String[] opciones = {
@@ -923,7 +977,9 @@ public class Ventana extends JFrame {
         }
     }
 
-
+    /** 
+    * Busca un postulante por su nombre. 
+    */
     private void buscarPostulante() {
 
         String nombre = JOptionPane.showInputDialog(
@@ -955,7 +1011,9 @@ public class Ventana extends JFrame {
         );
     }
 
-
+    /** 
+    * Busca los postulantes asociados a una determinada vacante. 
+    */
     private void buscarPostulantesPorVacante() {
 
         String vacante = JOptionPane.showInputDialog(
@@ -987,7 +1045,9 @@ public class Ventana extends JFrame {
         );
     }
 
-
+    /** 
+    * Busca y muestra la información de una empresa. 
+    */
     private void buscarInformacionEmpresa() {
 
         String empresa = JOptionPane.showInputDialog(
@@ -1019,7 +1079,9 @@ public class Ventana extends JFrame {
         );
     }
 
-
+    /** 
+    * Busca las empresas asociadas a una determinada vacante.
+    */
     private void buscarEmpresaPorVacante() {
 
         String vacante = JOptionPane.showInputDialog(
@@ -1053,7 +1115,10 @@ public class Ventana extends JFrame {
 
 
 
-
+    /** 
+    * Busca la empresa y vacante seleccionadas y realiza el proceso 
+    * de contratación utilizando el gestor de la bolsa de trabajo. 
+    */
     private void realizarContratacion() {
 
         String nombreEmpresa = JOptionPane.showInputDialog(
@@ -1140,7 +1205,12 @@ public class Ventana extends JFrame {
     }
 
 
-
+    /** 
+    * Captura temporalmente la salida enviada a la consola por una acción, 
+    * permitiendo mostrar posteriormente esa información en la interfaz gráfica. 
+    * @param accion: acción cuya salida se desea capturar 
+    * @return texto generado por la acción 
+    */
     private String capturarSalida(Runnable accion) {
 
         PrintStream salidaOriginal = System.out;
@@ -1166,7 +1236,11 @@ public class Ventana extends JFrame {
         return salida.toString().trim();
     }
 
-
+    /** 
+    * Muestra un texto dentro de una ventana emergente. 
+    * @param titulo: título de la ventana 
+    * @param texto: contenido que se desea mostrar 
+    */
     private void mostrarTexto(
             String titulo,
             String texto
