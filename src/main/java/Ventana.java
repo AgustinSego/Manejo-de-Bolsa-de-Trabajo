@@ -95,10 +95,6 @@ public class Ventana extends JFrame {
     }
 
 
-    // =========================================================
-    // AGREGAR
-    // =========================================================
-
     private void menuAgregar() {
 
         String[] opciones = {
@@ -358,9 +354,6 @@ public class Ventana extends JFrame {
     }
 
 
-    // =========================================================
-    // MOSTRAR
-    // =========================================================
 
     private void menuMostrar() {
 
@@ -487,9 +480,6 @@ public class Ventana extends JFrame {
     }
 
 
-    // =========================================================
-    // EDITAR
-    // =========================================================
 
     private void menuEditar() {
 
@@ -743,10 +733,6 @@ public class Ventana extends JFrame {
     }
 
 
-    // =========================================================
-    // ELIMINAR
-    // =========================================================
-
     private void menuEliminar() {
 
         String[] opciones = {
@@ -896,9 +882,7 @@ public class Ventana extends JFrame {
     }
 
 
-    // =========================================================
-    // BUSCAR
-    // =========================================================
+
 
     private void menuBuscar() {
 
@@ -1068,9 +1052,7 @@ public class Ventana extends JFrame {
     }
 
 
-    // =========================================================
-    // REALIZAR CONTRATACIÓN
-    // =========================================================
+
 
     private void realizarContratacion() {
 
@@ -1158,9 +1140,6 @@ public class Ventana extends JFrame {
     }
 
 
-    // =========================================================
-    // MÉTODOS AUXILIARES
-    // =========================================================
 
     private String capturarSalida(Runnable accion) {
 
