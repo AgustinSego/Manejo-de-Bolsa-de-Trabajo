@@ -25,8 +25,7 @@ public class GestorBolsaTrabajo {
                     / p.getSueldoSolicitado()) * 100;
         }
 
-        return porcentajeExperiencia * 0.6
-                + porcentajeSueldo * 0.4;
+        return Math.round((porcentajeExperiencia * 0.6 + porcentajeSueldo * 0.4) * 100.0) / 100.0;
     }
 
     public Postulante realizarContratacion(
@@ -37,7 +36,7 @@ public class GestorBolsaTrabajo {
             ArrayList<String> keyEmpresa)
     {
 
-        String campo = empresa.getCampoLaboralRequerido().trim();
+        String campo = empresa.getNombreVacante().trim();
         ArrayList<Postulante> candidatos = mapaPostulante.get(campo);
 
         if (candidatos == null)
@@ -51,8 +50,7 @@ public class GestorBolsaTrabajo {
 
         for (Postulante pos : candidatos)
         {
-            if (pos.getExperiencia() >= empresa.getExperienciaRequerida()
-                && pos.getSueldoSolicitado() <= empresa.getSueldo()){
+            if (pos.getExperiencia() >= empresa.getExperienciaRequerida()){
 
                 double porcentaje = porcentajeCompatibilidad(pos, empresa);
 
