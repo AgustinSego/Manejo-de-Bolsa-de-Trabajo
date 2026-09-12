@@ -37,7 +37,7 @@ public class Ventana extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(7, 1, 10, 10));
+        panel.setLayout(new GridLayout(8, 1, 10, 10));
 
         JLabel titulo = new JLabel(
                 "GESTOR DE BOLSA DE TRABAJO",
@@ -51,7 +51,8 @@ public class Ventana extends JFrame {
         JButton editar = new JButton("3) Editar");
         JButton eliminar = new JButton("4) Eliminar");
         JButton buscar = new JButton("5) Buscar");
-        JButton salir = new JButton("6) Salir");
+        JButton contratar = new JButton("6) Realizar Contratación");
+        JButton salir = new JButton("7) Salir");
 
         panel.add(titulo);
         panel.add(agregar);
@@ -59,6 +60,7 @@ public class Ventana extends JFrame {
         panel.add(editar);
         panel.add(eliminar);
         panel.add(buscar);
+        panel.add(contratar);
         panel.add(salir);
 
         add(panel);
@@ -81,6 +83,10 @@ public class Ventana extends JFrame {
 
         buscar.addActionListener(e -> {
             menuBuscar();
+        });
+
+        contratar.addActionListener(e -> {
+            realizarContratacion();
         });
 
         salir.addActionListener(e -> {
@@ -362,7 +368,8 @@ public class Ventana extends JFrame {
             "1) Mostrar postulantes",
             "2) Mostrar Empresas",
             "3) Mostrar Vacantes disponibles",
-            "4) Salir"
+            "4) Mostrar historial de contrataciones",
+            "5) Salir"
         };
 
         int opcion = JOptionPane.showOptionDialog(
@@ -387,6 +394,10 @@ public class Ventana extends JFrame {
         } else if (opcion == 2) {
 
             mostrarVacantesDisponibles();
+
+        } else if (opcion == 3) {
+
+            mostrarHistorialContrataciones();
         }
     }
 
@@ -453,6 +464,25 @@ public class Ventana extends JFrame {
         mostrarTexto(
                 "Vacantes disponibles",
                 resultado.toString()
+        );
+    }
+
+
+    private void mostrarHistorialContrataciones() {
+
+        GestorBolsaTrabajo gestor = new GestorBolsaTrabajo();
+
+        String resultado = capturarSalida(() -> {
+            gestor.mostrarHistorialContrataciones();
+        });
+
+        if (resultado.isEmpty()) {
+            resultado = "No existe historial de contrataciones.";
+        }
+
+        mostrarTexto(
+                "Historial de contrataciones",
+                resultado
         );
     }
 
@@ -866,6 +896,9 @@ public class Ventana extends JFrame {
     }
 
 
+    // =========================================================
+    // BUSCAR
+    // =========================================================
 
     private void menuBuscar() {
 
@@ -1030,6 +1063,96 @@ public class Ventana extends JFrame {
 
         mostrarTexto(
                 "Empresa por vacante",
+                resultado
+        );
+    }
+
+
+    // =========================================================
+    // REALIZAR CONTRATACIÓN
+    // =========================================================
+
+    private void realizarContratacion() {
+
+        String nombreEmpresa = JOptionPane.showInputDialog(
+                this,
+                "Ingrese el nombre de la empresa que ofrece la vacante:"
+        );
+
+        if (nombreEmpresa == null) {
+            return;
+        }
+
+        String nombreVacante = JOptionPane.showInputDialog(
+                this,
+                "Ingrese el nombre de la vacante a llenar:"
+        );
+
+        if (nombreVacante == null) {
+            return;
+        }
+
+        nombreEmpresa = nombreEmpresa.toLowerCase().trim();
+        nombreVacante = nombreVacante.toLowerCase().trim();
+
+        ArrayList<Empresa> empresas = mapaEmpresa.get(nombreVacante);
+
+        if (empresas == null || empresas.isEmpty()) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No se encontró la vacante.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            return;
+        }
+
+        Empresa empresaEncontrada = null;
+
+        for (Empresa empresa : empresas) {
+
+            if (empresa.getNombreEmpresa().equalsIgnoreCase(nombreEmpresa)) {
+
+                empresaEncontrada = empresa;
+                break;
+            }
+        }
+
+        if (empresaEncontrada == null) {
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No se encontró una empresa con ese nombre para la vacante.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            return;
+        }
+
+        final Empresa empresaSeleccionada = empresaEncontrada;
+
+        GestorBolsaTrabajo gestor = new GestorBolsaTrabajo();
+
+        String resultado = capturarSalida(() -> {
+
+            gestor.realizarContratacion(
+                    empresaSeleccionada,
+                    mapaPostulante,
+                    keysPostulantes,
+                    mapaEmpresa,
+                    keysTrabajo
+            );
+        });
+
+        if (resultado.isEmpty()) {
+            resultado = "No se pudo realizar la contratación.";
+        }
+
+        mostrarTexto(
+                "Realizar Contratación",
                 resultado
         );
     }
