@@ -1,0 +1,101 @@
+@startuml
+class Main
+
+class Ventana {
+    +Ventana(...)
+    +menuAgregar()
+    +menuMostrar()
+    +menuEditar()
+    +menuEliminar()
+    +menuBuscar()
+    +realizarContratacion()
+}
+
+class Postulante {
+    -nombre : String
+    -campoLaboral : String
+    -rut : String
+    -experiencia : int
+    -edad : int
+    -sueldoSolicitado : int
+
+    +Postulante(...)
+    +getNombre() : String
+    +getRut() : String
+    +getCampoLaboral() : String
+    +getExperiencia() : int
+    +getEdad() : int
+    +getSueldoSolicitado() : int
+}
+
+class Empresa {
+    -nombreEmpresa : String
+    -nombreVacante : String
+    -campoLaboralRequerido : String
+    -sueldo : int
+    -experenciaRequerida : int
+
+    +Empresa(...)
+    +getNombreEmpresa() : String
+    +getNombreVacante() : String
+    +getCampoLaboralRequerido() : String
+    +getSueldo() : int
+    +getExperienciaRequerida() : int
+}
+
+interface InterfazGestion<T> {
+    +eliminar(...)
+    +agregar(...)
+    +mostrar(...)
+    +edicion(...)
+    +buscarList(...)
+    +buscarMap(...)
+}
+
+class ManejoPostulantes {
+    -mensajeError : String
+}
+
+class ManejoEmpresa {
+    -mensajeError : String
+}
+
+class GestorBolsaTrabajo {
+    +porcentajeCompatibilidad(...)
+    +realizarContratacion(...)
+    +mostrarHistorialContrataciones()
+}
+
+class DatosInvalidosException
+class ElementosNoEncontradosException
+
+ManejoPostulantes ..> DatosInvalidosException
+ManejoPostulantes ..> ElementosNoEncontradosException
+
+ManejoEmpresa ..> DatosInvalidosException
+ManejoEmpresa ..> ElementosNoEncontradosException
+
+DatosInvalidosException --|> Exception
+ElementosNoEncontradosException --|> Exception
+
+Main --> Ventana
+Main --> ManejoPostulantes
+Main --> ManejoEmpresa
+
+Ventana --> ManejoPostulantes
+Ventana --> ManejoEmpresa
+Ventana --> GestorBolsaTrabajo
+
+ManejoPostulantes ..|> InterfazGestion
+ManejoEmpresa ..|> InterfazGestion
+
+ManejoPostulantes --> Postulante
+ManejoEmpresa --> Empresa
+
+GestorBolsaTrabajo --> Postulante
+GestorBolsaTrabajo --> Empresa
+
+DatosInvalidosException --|> Exception
+ElementosNoEncontradosException --|> Exception
+
+@enduml
