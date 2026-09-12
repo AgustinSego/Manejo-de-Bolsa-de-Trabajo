@@ -38,7 +38,7 @@ public class Main {
         int opcion = leer.nextInt();
 
         if(opcion == 1){
-            Ventana bolsaVentana = new Ventana();
+            Ventana bolsaVentana = new Ventana(mapaEmpresa, keysTrabajo,mapaPostulante,keysPostulantes);
             bolsaVentana.setVisible(true);
         }else if(opcion == 2){
             ejecutarPorConsola(mapaEmpresa, keysTrabajo, mapaPostulante, keysPostulantes);

@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 public class ManejoEmpresa implements InterfazGestion <Empresa>{
 
+    private String mensajeError = null;
     @Override //elimina una vacante
     public void eliminar(HashMap<String, ArrayList<Empresa>> mapa, ArrayList<String> keys, String vacante){
         File ArchivoOriginal = new File("src/Puestos de trabajo.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
+
+        mensajeError = null;
 
         try(BufferedReader lectura = new BufferedReader(new FileReader(ArchivoOriginal));
             BufferedWriter escribir = new BufferedWriter(new FileWriter(ArchivoTemporal));){
@@ -28,16 +31,17 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
                 }
             }
             if(!encontrado){
-                throw new ElementosNoEncontradosException("el vacante" +vacante + "no existe " );}
+                throw new ElementosNoEncontradosException("el vacante " +vacante + " no existe " );}
                 
 
-        }catch(ElementosNoEncontradosException e){  
-
+        }catch(ElementosNoEncontradosException e){
                System.out.println(e.getMessage());
+               mensajeError = e.getMessage();
                return;
         
         }catch(Exception e){
             System.out.println("Error al eliminar la vacante.");
+            mensajeError = "Error al eliminar la vacante.";
             return;
         }
 
@@ -73,13 +77,15 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
             }
             
             if(!encontrado){
-              throw new ElementosNoEncontradosException("le empresa" +empresa + "no existe" );
+              throw new ElementosNoEncontradosException("le empresa " +empresa + " no existe" );
             }
         }catch(ElementosNoEncontradosException e){
             System.out.println(e.getMessage());
+            mensajeError = e.getMessage();
             return;
         }catch(Exception e){
             System.out.println("Error al eliminar la vacante.");
+            mensajeError = "Error al eliminar la vacante.";
             return;
         }
 
@@ -95,6 +101,7 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
     }
     @Override //agrega una vacante, la vacante nueva viene en Empresa
     public void agregar(HashMap<String, ArrayList<Empresa>> mapa, ArrayList<String> keys, Empresa empresa){
+        mensajeError = null;
         try{
             if(empresa.getNombreVacante() == null || empresa.getNombreVacante().trim().isEmpty()) {
 
@@ -139,9 +146,11 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
                 System.out.println("Vacante agregada exitosamente");
                 }
         }catch(DatosInvalidosException e){
+                mensajeError = e.getMessage();
                 System.out.println(e.getMessage());
         }catch (Exception e) {
-                System.err.println("Error al agregar vacante" + e.getMessage());
+                mensajeError = "Error al agregar vacante: " + e.getMessage();
+                System.err.println("Error al agregar postulante" + e.getMessage());
         }
        
     }
@@ -281,5 +290,8 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
             }
         }
 
+    }
+    public String getMensajeError() {
+    return mensajeError;
     }
 }

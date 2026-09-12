@@ -4,8 +4,11 @@ import java.io.*;
 
 public class ManejoPostulantes implements InterfazGestion<Postulante> {
 
+    private String mensajeError = null;
+
     @Override //elimina un postulante
     public void eliminar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String postulante){
+        mensajeError = null;
         try{
             boolean encontrado = false;
             for(String key: keys){
@@ -18,7 +21,7 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
                 }
             }
             if(!encontrado){
-               throw new ElementosNoEncontradosException("El postulante" + postulante + "no existe");
+               throw new ElementosNoEncontradosException("El postulante " + postulante + " no existe");
             }
 
             File ArchivoOriginal = new File("src/Postulantes.csv");
@@ -45,15 +48,17 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             ArchivoOriginal.delete();
             ArchivoTemporal.renameTo(ArchivoOriginal);
             System.out.println("Postulante eliminado exitosamente");
-        
+
         }catch(ElementosNoEncontradosException e){
+            mensajeError = e.getMessage();
             System.err.println("Error: " + e.getMessage());
-        }
+    }
 
     }
 
     @Override //agrega un postulante
     public void agregar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, Postulante persona){
+        mensajeError = null;
         try{
             if(persona.getNombre() == null ||persona.getNombre().trim().isEmpty() ){
                 throw new DatosInvalidosException ("nombre del postulante no puede estar vacio");
@@ -97,9 +102,11 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
                 }
 
         }catch (DatosInvalidosException e) {
+            mensajeError = e.getMessage();
             System.err.println("Error: " + e.getMessage());
         }catch (Exception e) {
-                System.err.println("Error al agregar postulante: " + e.getMessage());
+            mensajeError = "Error al agregar postulante: " + e.getMessage();
+            System.err.println("Error al agregar postulante: " + e.getMessage());
         }
     }
 
@@ -242,5 +249,8 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
                 cont++;
             }
         }
+    }
+    public String getMensajeError() {
+        return mensajeError;
     }
 }
