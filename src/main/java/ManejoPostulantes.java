@@ -1,12 +1,25 @@
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.io.*;
-
+/** 
+* Clase encargada de administrar las operaciones relacionadas 
+* con los postulantes de la bolsa de trabajo. 
+* Implementa las operaciones definidas en InterfazGestion 
+* para objetos de tipo Postulante. 
+*/
 public class ManejoPostulantes implements InterfazGestion<Postulante> {
-
+    /** 
+    * Guarda un mensaje relacionado con algún error ocurrido 
+    * durante las operaciones de gestión. 
+    */
     private String mensajeError = null;
-
-    @Override //elimina un postulante
+    /** 
+    * Elimina un postulante del mapa de postulantes y del archivo CSV.  
+    * @param mapa: mapa que contiene los postulantes agrupados por campo laboral 
+    * @param keys: lista de claves utilizadas en el mapa 
+    * @param postulante: nombre del postulante que se desea eliminar 
+    */
+    @Override 
     public void eliminar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String postulante){
         mensajeError = null;
         try{
@@ -55,8 +68,16 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
     }
 
     }
+    /** 
+    * Agrega un nuevo postulante al mapa y al archivo CSV.  
+    * Antes de agregarlo, verifica que los datos ingresados 
+    * cumplan con las condiciones establecidas.  
+    * @param mapa: mapa donde se almacenarán los postulantes 
+    * @param keys: lista de claves utilizadas en el mapa
+    * @param persona: postulante que se desea agregar 
+    */
 
-    @Override //agrega un postulante
+    @Override 
     public void agregar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, Postulante persona){
         mensajeError = null;
         try{
@@ -109,8 +130,12 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             System.err.println("Error al agregar postulante: " + e.getMessage());
         }
     }
-
-    @Override //mostrar todos los postulantes
+    /** 
+    * Muestra todos los postulantes almacenados en el mapa.    
+    * @param mapa: mapa que contiene los postulantes 
+    * @param keys: lista de claves utilizadas en el mapa 
+    */
+    @Override 
     public void mostrar(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys){
         for (String key : keys) {
 
@@ -124,8 +149,15 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             }
         }
     }
-
-    @Override // cambia el nombre de un postulante o cambiar el sueldo
+    /** 
+    * Modifica el nombre de un postulante tanto en el mapa 
+    * como en el archivo CSV. 
+    * @param mapa: mapa que contiene los postulantes 
+    * @param keys: lista de claves utilizadas en el mapa 
+    * @param nombre: nombre actual del postulante 
+    * @param nombreCambiar: nuevo nombre del postulante 
+    */
+    @Override 
     public void edicion(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String nombre, String nombreCambiar){
 
         File ArchivoOriginal = new File("src/Postulantes.csv");
@@ -166,7 +198,13 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
         }
         System.out.println("Se ha cambiado exitosamente el nombre del postulante");
     }
-
+   /** 
+    * Modifica el sueldo solicitado por un postulante para una vacante específica. 
+    * @param mapa: mapa que contiene los postulantes 
+    * @param keys: lista de claves utilizadas en el mapa 
+    * @param nombre: nombre del postulante 
+    * @param sueldoSolicitadoCambiar: nuevo sueldo solicitado 
+    * @param vacante: vacante asociada al postulante */
     public void edicion(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keys, String nombre, int sueldoSolicitadoCambiar, String vacante){
         File ArchivoOriginal = new File("src/Postulantes.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
@@ -207,8 +245,14 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
         }
         System.out.println("Se ha cambiado exitosamente el sueldo solicitado del postulante");
     }
-
-    @Override //toda la info del postulante (puede tener más de una postulación)
+    @Override 
+    /** 
+    * Busca todas las postulaciones asociadas a un postulante 
+    * utilizando su nombre. 
+    * @param mapa: mapa que contiene los postulantes 
+    * @param keysPostulante: lista de claves utilizadas en el mapa 
+    * @param nombrePostulante: nombre del postulante que se desea buscar 
+    */
     public void buscarList(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keysPostulante, String nombrePostulante){
         ArrayList<Postulante> postulante = new ArrayList<>();
         for(String clave: keysPostulante){
@@ -232,8 +276,14 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             }
         }
     }
+    /** 
+    * Busca y muestra los postulantes asociados a una vacante.  
+    * @param mapa: mapa que contiene los postulantes agrupados por vacante 
+    * @param keysPostulantes: lista de claves utilizadas en el mapa 
+    * @param vacante: vacante que se desea buscar 
+    */
 
-    @Override //mostrar postulantes para una vacante
+    @Override 
     public void buscarMap(HashMap<String, ArrayList<Postulante>> mapa, ArrayList<String> keysPostulantes, String vacante){
         if(!mapa.containsKey(vacante)){ System.out.println("No existe la vacante");}
         else{
@@ -250,6 +300,10 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             }
         }
     }
+    /** 
+    * Obtiene el mensaje del último error ocurrido. 
+    * @return mensaje del error, o null si no se ha producido un error 
+    */
     public String getMensajeError() {
         return mensajeError;
     }

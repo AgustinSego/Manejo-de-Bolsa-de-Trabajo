@@ -2,8 +2,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.*;
 
+/**
+ * Clase encargada de gestionar las funcionalidades relacionadas
+ * con la bolsa de trabajo, principalmente el cálculo de compatibilidad
+ * entre postulantes y empresas y el proceso de contratación.
+ */
 public class GestorBolsaTrabajo {
-
+    /**
+     * Calcula el porcentaje de compatibilidad entre un postulante
+     * y una vacante de trabajo.
+     *
+     * La experiencia representa el 60% de la compatibilidad y
+     * el sueldo solicitado representa el 40%.
+     *
+     * @param p: postulante que será evaluado.
+     * @param puesto: empresa y vacante con la que se comparará el postulante.
+     * @return porcentaje: de compatibilidad entre el postulante y la vacante,
+     *         redondeado a dos decimales.
+     */
     public double porcentajeCompatibilidad(Postulante p, Empresa puesto) {
 
         double porcentajeExperiencia;
@@ -27,7 +43,28 @@ public class GestorBolsaTrabajo {
 
         return Math.round((porcentajeExperiencia * 0.6 + porcentajeSueldo * 0.4) * 100.0) / 100.0;
     }
-
+    /**
+     * Realiza el proceso de contratación para una vacante.
+     *
+     * Busca los postulantes asociados a la vacante, verifica si cumplen
+     * con la experiencia requerida y selecciona al postulante con mayor
+     * experiencia entre los que cumplen el requisito.
+     *
+     * Además, registra la contratación en el archivo de historial,
+     * elimina al postulante seleccionado y elimina la vacante de la
+     * bolsa de trabajo.
+     *
+     * @param empresa: empresa que ofrece la vacante.
+     * @param mapaPostulante: mapa que contiene los postulantes agrupados
+     *                       según la vacante.
+     * @param keysPostulantes: lista de claves utilizadas en el mapa de postulantes.
+     * @param mapaEmpresa: mapa que contiene las empresas agrupadas
+     *                    según la vacante.
+     * @param keyEmpresa: lista de claves utilizadas en el mapa de empresas.
+     * @return el postulante seleccionado si la contratación se realiza
+     *         correctamente; retorna {@code null} si no existen postulantes
+     *         o ninguno cumple con los requisitos.
+     */
     public Postulante realizarContratacion(
             Empresa empresa,
             HashMap<String, ArrayList<Postulante>> mapaPostulante,
@@ -54,7 +91,7 @@ public class GestorBolsaTrabajo {
 
                 double porcentaje = porcentajeCompatibilidad(pos, empresa);
 
-                if (mejor == null || pos.getExperiencia() > mejor.getExperiencia()) mejor = pos; mejorPorcentaje = porcentaje;}
+                if (mejor == null || pos.getExperiencia() > mejor.getExperiencia()){ mejor = pos; mejorPorcentaje = porcentaje;}}
         }
 
         if (mejor == null)
@@ -102,7 +139,15 @@ public class GestorBolsaTrabajo {
         return mejor;
     }
 
-
+    /**
+     * Muestra por consola el historial de las contrataciones realizadas.
+     *
+     * Lee los datos almacenados en el archivo {@code gestion.csv}
+     * y muestra la información de la empresa, la vacante y el postulante
+     * contratado.
+     *
+     * Si el archivo no existe, se informa que no hay historial disponible.
+     */
     public void mostrarHistorialContrataciones()
     {
         try (BufferedReader br = new BufferedReader(new FileReader("src/gestion.csv")))
