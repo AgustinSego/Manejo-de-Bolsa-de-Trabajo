@@ -1,27 +1,24 @@
 import java.io.*;
 import java.util.HashMap;
 import java.util.ArrayList;
-/** 
-* Clase encargada de administrar las operaciones relacionadas 
-* con las empresas y sus vacantes dentro de la bolsa de trabajo. 
-* Implementa las operaciones definidas en InterfazGestion 
-* para objetos de tipo Empresa. 
-*/
-public class ManejoEmpresa implements InterfazGestion <Empresa>{
-    /** 
-    * Guarda un mensaje relacionado con algún error ocurrido 
-    * durante las operaciones de gestión. 
-    */
+
+public class ManejoEmpresa extends GestionAbstracta<Empresa>{
+    private LecturaProcesamientoCsv lectorCsv;
+
+    public ManejoEmpresa(){
+        super();
+        lectorCsv = new LecturaProcesamientoCsv();
+
+        lectorCsv.leerCsv(mapa,
+                keys,
+                "src/Puestos de trabajo.csv",
+                1,
+                datos -> new Empresa(datos[0], datos[1], datos[2], Integer.parseInt(datos[3].trim()), Integer.parseInt(datos[4].trim())));
+    }
+
     private String mensajeError = null;
-    /** 
-    * Elimina una vacante del archivo CSV y de las estructuras 
-    * de datos utilizadas por el programa. 
-    * @param mapa: mapa que contiene las empresas agrupadas por vacante 
-    * @param keys: lista de claves utilizadas en el mapa 
-    * @param vacante: nombre de la vacante que se desea eliminar 
-    */
-    @Override 
-    public void eliminar(HashMap<String, ArrayList<Empresa>> mapa, ArrayList<String> keys, String vacante){
+    @Override
+    public void eliminar(String vacante){
         File ArchivoOriginal = new File("src/Puestos de trabajo.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
 
@@ -66,17 +63,9 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
 
         mapa.remove(vacante);
         keys.remove(vacante);
-    }       
+    }
 
-
-    /** 
-    * Elimina una empresa y todas las vacantes asociadas a ella
-    * del archivo CSV y de las estructuras de datos. 
-    * @param mapa: mapa que contiene las empresas agrupadas por vacante 
-    * @param empresa: nombre de la empresa que se desea eliminar 
-    * @param keys: lista de claves utilizadas en el mapa 
-    */
-    public void eliminar(HashMap<String, ArrayList<Empresa>> mapa, String empresa, ArrayList<String> keys){
+    public void eliminar(String empresa, String a){
         File ArchivoOriginal = new File("src/Puestos de trabajo.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
 
@@ -120,16 +109,9 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
             empresas.removeIf(emp -> emp.getNombreEmpresa().equals(empresa));
         }
     }
-    /** 
-    * Agrega una nueva vacante al mapa y al archivo CSV. 
-    * Antes de agregarla, verifica que los datos de la empresa, 
-    * vacante, sueldo y experiencia sean válidos. 
-    * @param mapa: mapa donde se almacenarán las empresas 
-    * @param keys: lista de claves utilizadas en el mapa 
-    * @param empresa: empresa que contiene la nueva vacante 
-    */
+
     @Override 
-    public void agregar(HashMap<String, ArrayList<Empresa>> mapa, ArrayList<String> keys, Empresa empresa){
+    public void agregar(Empresa empresa){
         mensajeError = null;
         try{
             if(empresa.getNombreVacante() == null || empresa.getNombreVacante().trim().isEmpty()) {
@@ -183,15 +165,10 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
         }
        
     }
-    /** 
-    * Muestra todas las vacantes y la información de las empresas 
-    * que las ofrecen. 
-    * @param mapa: mapa que contiene las empresas agrupadas por vacante 
-    * @param keysTrabajo: lista de claves utilizadas en el mapa 
-    */
+
     @Override
-    public void mostrar(HashMap<String, ArrayList<Empresa>> mapa, ArrayList<String> keysTrabajo) {
-        for (String k : keysTrabajo)
+    public void mostrar() {
+        for (String k : keys)
         {
             ArrayList<Empresa> lista = mapa.get(k);
 
@@ -205,16 +182,9 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
             }
         }
     }
-    /** 
-    * Modifica el nombre de una empresa tanto en el archivo CSV 
-    * como en las estructuras de datos.  
-    * @param mapa: mapa que contiene las empresas 
-    * @param keys: lista de claves utilizadas en el mapa 
-    * @param nombre: nombre actual de la empresa 
-    * @param nombreCambiar: nuevo nombre de la empresa 
-    */
+
     @Override
-    public void edicion(HashMap<String, ArrayList<Empresa>> mapa, ArrayList<String> keys, String nombre, String nombreCambiar){
+    public void edicion(String nombre, String nombreCambiar){
         File ArchivoOriginal = new File("src/Puestos de trabajo.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
 
@@ -253,15 +223,8 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
         }
         System.out.println("Se ha cambiado exitosamente el nombre de la empresa");
     }
-    /** 
-    * Modifica el sueldo ofrecido por una empresa para una vacante específica. 
-    * @param mapa: mapa que contiene las empresas 
-    * @param keys: lista de claves utilizadas en el mapa 
-    * @param empresa: nombre de la empresa 
-    * @param sueldoCambiar: nuevo sueldo ofrecido 
-    * @param vacante: vacante asociada al sueldo que se desea modificar 
-    */
-    public void edicion(HashMap<String, ArrayList<Empresa>> mapa, ArrayList<String> keys, String empresa, int sueldoCambiar, String vacante){
+
+    public void edicion(String empresa, int sueldoCambiar, String vacante){
         File ArchivoOriginal = new File("src/Puestos de trabajo.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
 
@@ -299,15 +262,11 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
         }
         System.out.println("Se ha cambiado exitosamente el sueldo previsto de la empresa");
     }
-    /** 
-    * Busca todas las vacantes ofrecidas por una empresa. 
-    * @param mapa: mapa que contiene las empresas 
-    * @param keysTrabajo: lista de claves utilizadas en el mapa 
-    * @param nombreEmpresa: nombre de la empresa que se desea buscar */
-    @Override 
-    public void buscarList(HashMap<String, ArrayList<Empresa>> mapa, ArrayList<String> keysTrabajo, String nombreEmpresa) {
+
+    @Override
+    public void buscarList(String nombreEmpresa) {
         ArrayList<Empresa> empresas = new ArrayList<>();
-        for (String clave : keysTrabajo){
+        for (String clave : keys){
             ArrayList<Empresa> lista = mapa.get(clave);
             for(Empresa emp: lista){
                 if(emp.getNombreEmpresa().equals(nombreEmpresa)){
@@ -327,13 +286,9 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
             }
         }
     }
-    /** Busca todas las empresas que ofrecen una determinada vacante. 
-    * @param mapa: mapa que contiene las empresas agrupadas por vacante 
-    * @param keysTrabajo: lista de claves utilizadas en el mapa 
-    * @param Vacante: nombre de la vacante que se desea buscar 
-    */
-    @Override 
-    public void buscarMap(HashMap<String, ArrayList<Empresa>> mapa, ArrayList<String> keysTrabajo, String Vacante) {
+
+    @Override
+    public void buscarMap(String Vacante) {
         if(!mapa.containsKey(Vacante)){System.out.println("No existe la vacante");}
 
         else{
@@ -351,10 +306,7 @@ public class ManejoEmpresa implements InterfazGestion <Empresa>{
         }
 
     }
-    /** 
-    * Obtiene el mensaje del último error ocurrido. 
-    * @return mensaje del error, o null si no se ha producido un error 
-    */
+
     public String getMensajeError() {
     return mensajeError;
     }

@@ -215,11 +215,7 @@ public class Ventana extends JFrame {
                     sueldo
             );
 
-            pos.agregar(
-                    mapaPostulante,
-                    keysPostulantes,
-                    p
-            );
+            pos.agregar(p);
 
             if (pos.getMensajeError() != null) {
 
@@ -329,11 +325,7 @@ public class Ventana extends JFrame {
                     experiencia
             );
 
-            emp.agregar(
-                    mapaEmpresa,
-                    keysTrabajo,
-                    empresa
-            );
+            emp.agregar(empresa);
 
             if (emp.getMensajeError() != null) {
 
@@ -425,10 +417,7 @@ public class Ventana extends JFrame {
 
         String resultado = capturarSalida(() -> {
 
-            pos.mostrar(
-                    mapaPostulante,
-                    keysPostulantes
-            );
+            pos.mostrar();
         });
 
         if (resultado.isEmpty()) {
@@ -448,10 +437,7 @@ public class Ventana extends JFrame {
 
         String resultado = capturarSalida(() -> {
 
-            emp.mostrar(
-                    mapaEmpresa,
-                    keysTrabajo
-            );
+            emp.mostrar();
         });
 
         if (resultado.isEmpty()) {
@@ -581,8 +567,6 @@ public class Ventana extends JFrame {
         String resultado = capturarSalida(() -> {
 
             pos.edicion(
-                    mapaPostulante,
-                    keysPostulantes,
                     nombre.toLowerCase(),
                     nombreCambiar.toLowerCase()
             );
@@ -637,8 +621,6 @@ public class Ventana extends JFrame {
             String resultado = capturarSalida(() -> {
 
                 pos.edicion(
-                        mapaPostulante,
-                        keysPostulantes,
                         nombre.toLowerCase(),
                         sueldo,
                         vacante.toLowerCase()
@@ -691,8 +673,6 @@ public class Ventana extends JFrame {
         String resultado = capturarSalida(() -> {
 
             emp.edicion(
-                    mapaEmpresa,
-                    keysTrabajo,
                     nombre.toLowerCase(),
                     nombreCambiar.toLowerCase()
             );
@@ -747,8 +727,6 @@ public class Ventana extends JFrame {
             String resultado = capturarSalida(() -> {
 
                 emp.edicion(
-                        mapaEmpresa,
-                        keysTrabajo,
                         empresa.toLowerCase(),
                         sueldo,
                         vacante.toLowerCase()
@@ -827,8 +805,6 @@ public class Ventana extends JFrame {
         }
 
         pos.eliminar(
-                mapaPostulante,
-                keysPostulantes,
                 nombre
         );
 
@@ -867,8 +843,6 @@ public class Ventana extends JFrame {
         }
 
         emp.eliminar(
-                mapaEmpresa,
-                keysTrabajo,
                 vacante
         );
 
@@ -907,9 +881,8 @@ public class Ventana extends JFrame {
         }
 
         emp.eliminar(
-                mapaEmpresa,
                 empresa,
-                keysTrabajo
+                "a"
         );
 
         if (emp.getMensajeError() != null) {
@@ -994,8 +967,6 @@ public class Ventana extends JFrame {
         String resultado = capturarSalida(() -> {
 
             pos.buscarList(
-                    mapaPostulante,
-                    keysPostulantes,
                     nombre
             );
         });
@@ -1028,8 +999,6 @@ public class Ventana extends JFrame {
         String resultado = capturarSalida(() -> {
 
             pos.buscarMap(
-                    mapaPostulante,
-                    keysPostulantes,
                     vacante
             );
         });
@@ -1062,8 +1031,6 @@ public class Ventana extends JFrame {
         String resultado = capturarSalida(() -> {
 
             emp.buscarList(
-                    mapaEmpresa,
-                    keysTrabajo,
                     empresa
             );
         });
@@ -1096,8 +1063,6 @@ public class Ventana extends JFrame {
         String resultado = capturarSalida(() -> {
 
             emp.buscarMap(
-                    mapaEmpresa,
-                    keysTrabajo,
                     vacante
             );
         });

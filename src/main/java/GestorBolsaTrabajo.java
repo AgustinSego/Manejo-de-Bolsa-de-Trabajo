@@ -132,9 +132,9 @@ public class GestorBolsaTrabajo {
         ManejoPostulantes manejoPostulantes = new ManejoPostulantes();
         ManejoEmpresa manejoEmpresa = new ManejoEmpresa();
 
-        manejoPostulantes.eliminar(mapaPostulante, keysPostulantes, mejor.getNombre());
+        manejoPostulantes.eliminar(mejor.getNombre());
 
-        manejoEmpresa.eliminar(mapaEmpresa, keyEmpresa, empresa.getNombreVacante());
+        manejoEmpresa.eliminar(empresa.getNombreVacante());
 
         return mejor;
     }
