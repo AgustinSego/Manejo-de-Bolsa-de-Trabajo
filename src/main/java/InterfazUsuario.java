@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InterfazUsuario {
@@ -27,12 +28,12 @@ public class InterfazUsuario {
         String opcion, subOpcion, entrada;
         do
         {
-            //principal
+            imprimir.principal();
             opcion = leer.next();
 
             switch (opcion) {
                 case "1":
-                    //menuAgregar
+                    imprimir.menuAgregar();
                     subOpcion = leer.next();
                     if (subOpcion.equals("1")) {
                         System.out.println("Ingrese el nombre del postulante: ");
@@ -80,7 +81,7 @@ public class InterfazUsuario {
                     }
                     break;
                 case "2":
-                    //menuMostrar
+                    imprimir.menuMostrar();
 
                     subOpcion = leer.next();
                     switch (subOpcion) {
@@ -92,7 +93,7 @@ public class InterfazUsuario {
                             break;
                         case "3":
                             System.out.println("#############################################");
-                            for (String vacante : keysTrabajo) {
+                            for (String vacante : empresa.keys) {
                                 System.out.println(vacante);
                             }
                             System.out.println("#############################################");
@@ -103,7 +104,7 @@ public class InterfazUsuario {
                     }
                     break;
                 case "3":
-                    //menuEditar
+                    imprimir.menuEditar();
 
                     subOpcion = leer.next();
                     switch (subOpcion) {
@@ -162,7 +163,7 @@ public class InterfazUsuario {
                     }
                     break;
                 case "4":
-                    //menueliminar
+                    imprimir.menuEliminar();
 
                     subOpcion = leer.next();
                     switch (subOpcion) {
@@ -193,7 +194,7 @@ public class InterfazUsuario {
 
                     break;
                 case "5":
-                    //menuBuscar
+                    imprimir.menuBuscar();
 
                     subOpcion = leer.next();
                     switch (subOpcion) {
@@ -238,8 +239,8 @@ public class InterfazUsuario {
                     Empresa empresaObjetivo = null;
 
                     // Buscamos el objeto Empresa que coincida
-                    if (mapaEmpresa.containsKey(nombreVacanteBuscada)) {
-                        ArrayList<Empresa> lista = mapaEmpresa.get(nombreVacanteBuscada);
+                    if (empresa.mapa.containsKey(nombreVacanteBuscada)) {
+                        ArrayList<Empresa> lista = empresa.mapa.get(nombreVacanteBuscada);
                         for (Empresa e : lista) {
                             if (e.getNombreEmpresa().equals(nombreEmpresaBuscada)) {
                                 empresaObjetivo = e;
@@ -251,10 +252,8 @@ public class InterfazUsuario {
                     if (empresaObjetivo != null) {
                         Postulante contratado = gestorBolsa.realizarContratacion(
                                 empresaObjetivo,
-                                mapaPostulante,
-                                keysPostulantes,
-                                mapaEmpresa,
-                                keysTrabajo
+                                postulante,
+                                empresa
                         );
 
                         if (contratado != null) {
@@ -267,6 +266,5 @@ public class InterfazUsuario {
                     break;
             }
         }while(!opcion.equals("7"));
-    }
     }
 }

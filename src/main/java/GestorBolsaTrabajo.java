@@ -55,28 +55,26 @@ public class GestorBolsaTrabajo {
      * bolsa de trabajo.
      *
      * @param empresa: empresa que ofrece la vacante.
-     * @param mapaPostulante: mapa que contiene los postulantes agrupados
+     * # @param mapaPostulante: mapa que contiene los postulantes agrupados
      *                       según la vacante.
-     * @param keysPostulantes: lista de claves utilizadas en el mapa de postulantes.
-     * @param mapaEmpresa: mapa que contiene las empresas agrupadas
+     * # @param keysPostulantes: lista de claves utilizadas en el mapa de postulantes.
+     * # @param mapaEmpresa: mapa que contiene las empresas agrupadas
      *                    según la vacante.
-     * @param keyEmpresa: lista de claves utilizadas en el mapa de empresas.
+     * # @param keyEmpresa: lista de claves utilizadas en el mapa de empresas.
      * @return el postulante seleccionado si la contratación se realiza
      *         correctamente; retorna {@code null} si no existen postulantes
      *         o ninguno cumple con los requisitos.
      */
     public Postulante realizarContratacion(
             Empresa empresa,
-            HashMap<String, ArrayList<Postulante>> mapaPostulante,
-            ArrayList<String> keysPostulantes,
-            HashMap<String, ArrayList<Empresa>> mapaEmpresa,
-            ArrayList<String> keyEmpresa)
+            ManejoPostulantes manejoPos,
+            ManejoEmpresa manejoEmp)
     {
 
         String campo = empresa.getNombreVacante().trim();
-        ArrayList<Postulante> candidatos = mapaPostulante.get(campo);
+        ArrayList<Postulante> candidatos = manejoPos.mapa.get(campo);
 
-        if (candidatos == null)
+        if (candidatos == null || candidatos.isEmpty())
         {
             System.out.println("No hay postulantes para este campo");
             return null;
@@ -129,12 +127,9 @@ public class GestorBolsaTrabajo {
             return null;
         }
 
-        ManejoPostulantes manejoPostulantes = new ManejoPostulantes();
-        ManejoEmpresa manejoEmpresa = new ManejoEmpresa();
+        manejoPos.eliminar(mejor.getNombre());
 
-        manejoPostulantes.eliminar(mejor.getNombre());
-
-        manejoEmpresa.eliminar(empresa.getNombreVacante());
+        manejoEmp.eliminar(empresa.getNombreVacante());
 
         return mejor;
     }
