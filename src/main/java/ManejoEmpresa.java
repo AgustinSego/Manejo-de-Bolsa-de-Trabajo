@@ -2,18 +2,38 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public class ManejoEmpresa extends GestionAbstracta<Empresa>{
+public class ManejoEmpresa implements InterfazGestion<Empresa>{
     private LecturaProcesamientoCsv lectorCsv;
+    private ArrayList<String> keys;
+    private HashMap<String, ArrayList<Empresa>> mapa;
 
     public ManejoEmpresa(){
-        super();
         lectorCsv = new LecturaProcesamientoCsv();
+        keys = new ArrayList<>();
+        mapa = new HashMap<>();
 
         lectorCsv.leerCsv(mapa,
                 keys,
                 "src/Puestos de trabajo.csv",
                 1,
                 datos -> new Empresa(datos[0], datos[1], datos[2], Integer.parseInt(datos[3].trim()), Integer.parseInt(datos[4].trim())));
+    }
+
+    public ArrayList<Empresa> obtenerLista(String campo){
+        ArrayList<Empresa> empList = mapa.get(campo);
+        if(empList == null) return new ArrayList<>();
+
+        return new ArrayList<>(empList);
+    }
+
+    public boolean existe(String vacante){return mapa.containsKey(vacante);}
+
+    public void mostrarVacantes(){
+        System.out.println("#############################################");
+        for(String vacantes: keys){
+            System.out.println(vacantes);
+        }
+        System.out.println("#############################################");
     }
 
     private String mensajeError = null;

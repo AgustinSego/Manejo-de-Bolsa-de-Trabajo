@@ -47,6 +47,5 @@ public class Impresora {
         System.out.println("4) Buscar empresa por vacante.");
         System.out.println("5) Salir.");
     }
-    public void menuRealizarContratacion(){}
 
 }

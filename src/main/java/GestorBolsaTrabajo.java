@@ -72,7 +72,9 @@ public class GestorBolsaTrabajo {
     {
 
         String campo = empresa.getNombreVacante().trim();
-        ArrayList<Postulante> candidatos = manejoPos.mapa.get(campo);
+
+        ArrayList<Postulante> candidatos = manejoPos.obtenerLista(campo);
+        //ArrayList<Postulante> candidatos = manejoPos.mapa.get(campo);
 
         if (candidatos == null || candidatos.isEmpty())
         {

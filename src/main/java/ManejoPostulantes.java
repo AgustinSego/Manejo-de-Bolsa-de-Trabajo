@@ -2,12 +2,16 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.io.*;
 
-public class ManejoPostulantes extends GestionAbstracta<Postulante> {
+public class ManejoPostulantes implements InterfazGestion<Postulante> {
     private LecturaProcesamientoCsv lectorCsv;
+    private ArrayList<String> keys;
+    private HashMap<String, ArrayList<Postulante>> mapa;
+
 
     public ManejoPostulantes(){
-        super();
         lectorCsv= new LecturaProcesamientoCsv();
+        keys = new ArrayList<>();
+        mapa = new HashMap<>();
 
         lectorCsv.leerCsv(
                 mapa,
@@ -17,6 +21,13 @@ public class ManejoPostulantes extends GestionAbstracta<Postulante> {
                 datos -> new Postulante(datos[0], datos[1], datos[2], Integer.parseInt(datos[3].trim()), Integer.parseInt(datos[4].trim()), Integer.parseInt(datos[5].trim()))
 
         );
+    }
+
+    public ArrayList<Postulante> obtenerLista(String campo){
+        ArrayList<Postulante> posList = mapa.get(campo);
+        if(posList == null) return new ArrayList<>();
+
+        return new ArrayList<>(posList);
     }
 
     private String mensajeError = null;

@@ -92,11 +92,7 @@ public class InterfazUsuario {
                             empresa.mostrar();
                             break;
                         case "3":
-                            System.out.println("#############################################");
-                            for (String vacante : empresa.keys) {
-                                System.out.println(vacante);
-                            }
-                            System.out.println("#############################################");
+                            empresa.mostrarVacantes();
                             break;
                         case "4":
                             gestorBolsa.mostrarHistorialContrataciones();
@@ -239,8 +235,8 @@ public class InterfazUsuario {
                     Empresa empresaObjetivo = null;
 
                     // Buscamos el objeto Empresa que coincida
-                    if (empresa.mapa.containsKey(nombreVacanteBuscada)) {
-                        ArrayList<Empresa> lista = empresa.mapa.get(nombreVacanteBuscada);
+                    if (empresa.existe(nombreVacanteBuscada)) {
+                        ArrayList<Empresa> lista = empresa.obtenerLista(nombreVacanteBuscada);
                         for (Empresa e : lista) {
                             if (e.getNombreEmpresa().equals(nombreEmpresaBuscada)) {
                                 empresaObjetivo = e;
