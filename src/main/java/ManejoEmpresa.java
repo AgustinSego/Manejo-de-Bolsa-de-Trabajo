@@ -300,16 +300,22 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
             System.err.println("Error al editar una empresa");
             return;
         }
-
+        boolean encontrado = false;
         for(String k : keys){
             ArrayList<Empresa> lista = mapa.get(k);
             for(Empresa emp : lista){
                 if(emp.getNombreEmpresa().equals(nombre)){
                     emp.setNombreEmpresa(nombreCambiar);
+                    encontrado = true;
                 }
             }
         }
-        System.out.println("Se ha cambiado exitosamente el nombre de la empresa");
+        if(encontrado){
+            System.out.println("Se ha cambiado exitosamente el nombre de la empresa");
+        }else{
+            mensajeError = "La empresa " + nombre + " no existe";
+            System.out.println(mensajeError);
+        }
     }
 
     /*
@@ -346,16 +352,30 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
             System.err.println("Error al editar la empresa");
             return;
         }
-
+        boolean encontradoEmpresa = false;
+        boolean encontradoVacante = false;
         for(String key : keys){
             ArrayList<Empresa> lista = mapa.get(key);
             for(Empresa emp : lista){
-                if(emp.getNombreEmpresa().equals(empresa) && emp.getNombreVacante().equals(vacante)){
-                    emp.setSueldo(sueldoCambiar);
-                }
+                if(emp.getNombreEmpresa().equals(empresa)){
+                    encontradoEmpresa = true;
+                    if(emp.getNombreVacante().equals(vacante)){
+                        emp.setSueldo(sueldoCambiar);
+                        encontradoVacante = true;
+                    }
+                }    
             }
         }
-        System.out.println("Se ha cambiado exitosamente el sueldo previsto de la empresa");
+        if(!encontradoEmpresa){
+            mensajeError = "La empresa " + empresa + " no existe";
+            System.out.println(mensajeError);
+        }else if(!encontradoVacante){
+            mensajeError = "La vacante " + vacante + " no existe para la empresa " + empresa;
+            System.out.println(mensajeError);
+
+        }else{
+            System.out.println("Se ha cambiado exitosamente el sueldo de la empresa");
+        }
     }
 
     /*

@@ -226,16 +226,22 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             System.err.println("Error al editar el postulante");
             return;
         }
-
+        boolean encontrado = false;
         for(String key: keys){
             ArrayList<Postulante> postulantes = mapa.get(key);
             for (Postulante postulante : postulantes) {
                 if(postulante.getNombre().equals(nombre)){
                     postulante.setNombre(nombreCambiar);
+                    encontrado = true;
                 }
             }
         }
-        System.out.println("Se ha cambiado exitosamente el nombre del postulante");
+        if(encontrado){
+            System.out.println("Se ha cambiado exitosamente el nombre del postulante");
+        }else{
+            mensajeError = "El postulante " + nombre + " no existe";
+            System.out.println(mensajeError);
+        }
     }
 
     /*
@@ -273,17 +279,23 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             System.err.println("Error al editar el postulante");
             return;
         }
-
+        boolean encontrado = false;
         for(String key: keys){
             ArrayList<Postulante> postulantes = mapa.get(key);
 
             for (Postulante postulante : postulantes) {
                 if(postulante.getNombre().equals(nombre) && postulante.getCampoLaboral().equals(vacante)){
                     postulante.setSueldoSolicitado(sueldoSolicitadoCambiar);
+                    encontrado = true;
                 }
             }
         }
-        System.out.println("Se ha cambiado exitosamente el sueldo solicitado del postulante");
+        if(encontrado){
+            System.out.println("Se ha cambiado exitosamente el sueldo del postulante");
+        }else{
+            mensajeError = "El postulante " + nombre + " no existe";
+            System.out.println(mensajeError);
+        }
     }
 
     /*
