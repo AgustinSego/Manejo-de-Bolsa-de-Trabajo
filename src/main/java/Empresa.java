@@ -27,24 +27,81 @@ public class Empresa {
         this.experenciaRequerida = experenciaRequerida;
 
     }
+    /*
+    * Establece el nombre de la vacante.
+    *
+    * @param nombreVacante nuevo nombre de la vacante.
+    */
     public void setNombreVacante (String nombreVacante){this.nombreVacante = nombreVacante;}
+    
+    /*
+    * Establece el campo laboral requerido para la vacante.
+    *
+    * @param campoLaboralRequerido nuevo campo laboral requerido.
+    */
 
     public void setCampoLaboralRequerido (String campoLaboralRequerido){this.campoLaboralRequerido = campoLaboralRequerido;}
+    
+    /*
+    * Establece el sueldo ofrecido para la vacante.
+    *
+    * @param sueldo nuevo sueldo ofrecido.
+    */
 
     public void setSueldo (int sueldo){this.sueldo = sueldo;}
+    
+    /*
+    * Establece la experiencia requerida para la vacante.
+    *
+    * @param experenciaRequerida nueva experiencia requerida.
+    */
 
     public void setExperenciaRequerida (int experenciaRequerida){this.experenciaRequerida = experenciaRequerida;}
 
+    /*
+    * Establece el nombre de la empresa.
+    *
+    * @param nombreEmpresa nuevo nombre de la empresa.
+    */
+
     public void setNombreEmpresa(String nombreEmpresa) {this.nombreEmpresa = nombreEmpresa;}
+    /*
+    * Obtiene el nombre de la empresa.
+    *
+    * @return nombre de la empresa.
+    */
 
     public String getNombreEmpresa() {return nombreEmpresa;}
 
+    /*
+    * Obtiene el nombre de la vacante.
+    *
+    * @return nombre de la vacante.
+    */
+
     public String getNombreVacante(){return nombreVacante;}
+
+    /*
+    * Obtiene el campo laboral requerido.
+    *
+    * @return campo laboral requerido.
+    */
 
     public String getCampoLaboralRequerido(){return campoLaboralRequerido;}
 
-    public int getSueldo(){return sueldo;}
+    /*
+    * Obtiene el sueldo ofrecido.
+    *
+    * @return sueldo ofrecido.
+    */
 
+    public int getSueldo(){return sueldo;}
+    
+    /**
+    * Obtiene la experiencia requerida para la vacante.
+    *
+    * @return experiencia requerida.
+    */
     public int getExperienciaRequerida(){return experenciaRequerida;}
     /**
     * Muestra la información general de la empresa

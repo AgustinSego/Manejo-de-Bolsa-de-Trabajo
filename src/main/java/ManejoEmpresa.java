@@ -1,11 +1,26 @@
 import java.io.*;
 import java.util.HashMap;
 import java.util.ArrayList;
+    
+
+     /*
+     * Gestiona las operaciones relacionadas con las empresas y sus vacantes.
+     * Permite agregar, eliminar, editar, mostrar y buscar información de empresas.
+     * La información se almacena en memoria mediante un mapa y se persiste
+     * en un archivo CSV.
+     */
+
 
 public class ManejoEmpresa implements InterfazGestion<Empresa>{
     private LecturaProcesamientoCsv lectorCsv;
     private ArrayList<String> keys;
     private HashMap<String, ArrayList<Empresa>> mapa;
+
+    /*
+     * Construye un objeto ManejoEmpresa e inicializa las estructuras
+     * utilizadas para almacenar las empresas y sus vacantes.
+     * Además, carga la información existente desde el archivo CSV.
+     */
 
     public ManejoEmpresa(){
         lectorCsv = new LecturaProcesamientoCsv();
@@ -19,15 +34,33 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
                 datos -> new Empresa(datos[0], datos[1], datos[2], Integer.parseInt(datos[3].trim()), Integer.parseInt(datos[4].trim())));
     }
 
+    /*
+    * Obtiene una copia de la lista de empresas asociadas a un campo
+    * o clave determinada.
+    *
+    * @param campo clave utilizada para buscar las empresas.
+    * @return lista de empresas asociadas al campo. Si no existe,
+    * retorna una lista vacía.
+    */
+
     public ArrayList<Empresa> obtenerLista(String campo){
         ArrayList<Empresa> empList = mapa.get(campo);
         if(empList == null) return new ArrayList<>();
 
         return new ArrayList<>(empList);
     }
-
+    
+    /*
+    * Comprueba si existe una vacante registrada.
+    *
+    * @param vacante nombre de la vacante que se desea comprobar.
+    * @return true si la vacante existe; false en caso contrario.
+    */
     public boolean existe(String vacante){return mapa.containsKey(vacante);}
 
+    /*
+    * Muestra por consola todas las vacantes registradas.
+    */
     public void mostrarVacantes(){
         System.out.println("#############################################");
         for(String vacantes: keys){
@@ -38,6 +71,13 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
 
     private String mensajeError = null;
     @Override
+    /*
+    * Elimina todas las empresas asociadas a una vacante y actualiza
+    * el archivo CSV correspondiente.
+    *
+    * @param vacante nombre de la vacante que se desea eliminar.
+    * @throws ElementosNoEncontradosException si el vacante  no existe.
+    */
     public void eliminar(String vacante){
         File ArchivoOriginal = new File("src/Puestos de trabajo.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
@@ -85,6 +125,15 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
         keys.remove(vacante);
     }
 
+    /*
+    * Elimina una empresa específica de las vacantes registradas
+    * y actualiza el archivo CSV.
+    *
+    * @param empresa nombre de la empresa que se desea eliminar.
+    * @param a parámetro utilizado para diferenciar esta sobrecarga
+    * del método eliminar(String).
+    * @throws ElementosNoEncontradosException si la empresa no existe.
+    */
     public void eliminar(String empresa, String a){
         File ArchivoOriginal = new File("src/Puestos de trabajo.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
@@ -130,6 +179,14 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
         }
     }
 
+    /*
+    * Agrega una empresa al sistema después de validar sus datos.
+    * La información también se almacena en el archivo CSV.
+    *
+    * @param empresa objeto Empresa que se desea agregar.
+    * @throws DatosInvalidosException si alguno de los datos de la empresa
+    * no cumple con las condiciones de validación.
+    */
     @Override 
     public void agregar(Empresa empresa){
         mensajeError = null;
@@ -185,7 +242,11 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
         }
        
     }
-
+    
+    /*
+    * Muestra por consola la información de todas las empresas
+    * y sus respectivas vacantes registradas.
+    */
     @Override
     public void mostrar() {
         for (String k : keys)
@@ -202,7 +263,14 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
             }
         }
     }
-
+    
+    /*
+    * Modifica el nombre de una empresa y actualiza el cambio
+    * tanto en memoria como en el archivo CSV.
+    *
+    * @param nombre nombre actual de la empresa.
+    * @param nombreCambiar nuevo nombre que tendrá la empresa.
+    */
     @Override
     public void edicion(String nombre, String nombreCambiar){
         File ArchivoOriginal = new File("src/Puestos de trabajo.csv");
@@ -244,6 +312,13 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
         System.out.println("Se ha cambiado exitosamente el nombre de la empresa");
     }
 
+    /*
+    * Modifica el sueldo previsto de una empresa para una vacante determinada.
+    *
+    * @param empresa nombre de la empresa.
+    * @param sueldoCambiar nuevo sueldo previsto.
+    * @param vacante nombre de la vacante asociada a la empresa.
+    */
     public void edicion(String empresa, int sueldoCambiar, String vacante){
         File ArchivoOriginal = new File("src/Puestos de trabajo.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
@@ -283,6 +358,13 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
         System.out.println("Se ha cambiado exitosamente el sueldo previsto de la empresa");
     }
 
+    /*
+    * Busca empresas por su nombre recorriendo todas las listas
+    * almacenadas y muestra la información encontrada.
+    *
+    * @param nombreEmpresa nombre de la empresa que se desea buscar.
+    */
+
     @Override
     public void buscarList(String nombreEmpresa) {
         ArrayList<Empresa> empresas = new ArrayList<>();
@@ -307,6 +389,12 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
         }
     }
 
+    /*
+    * Busca las empresas asociadas a una vacante específica
+    * utilizando el mapa de vacantes.
+    *
+    * @param Vacante nombre de la vacante que se desea buscar.
+    */
     @Override
     public void buscarMap(String Vacante) {
         if(!mapa.containsKey(Vacante)){System.out.println("No existe la vacante");}
@@ -326,6 +414,13 @@ public class ManejoEmpresa implements InterfazGestion<Empresa>{
         }
 
     }
+
+    /**
+    * Obtiene el mensaje correspondiente al último error ocurrido
+    * durante una operación de gestión.
+    *
+    * @return mensaje del error o null si no se ha producido un error.
+    */
 
     public String getMensajeError() {
     return mensajeError;

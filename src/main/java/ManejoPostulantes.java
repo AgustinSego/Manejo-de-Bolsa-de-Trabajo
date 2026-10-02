@@ -2,11 +2,22 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.io.*;
 
+ /*
+ * Gestiona las operaciones relacionadas con los postulantes.
+ * Permite agregar, eliminar, editar, mostrar y buscar postulantes.
+ * La información se almacena en memoria mediante un mapa y también
+ * se mantiene en un archivo CSV.
+ */
 public class ManejoPostulantes implements InterfazGestion<Postulante> {
     private LecturaProcesamientoCsv lectorCsv;
     private ArrayList<String> keys;
     private HashMap<String, ArrayList<Postulante>> mapa;
 
+    /*
+    * Construye un objeto ManejoPostulantes e inicializa las estructuras
+    * utilizadas para almacenar los postulantes.
+    * Además, carga los datos existentes desde el archivo CSV.
+    */
 
     public ManejoPostulantes(){
         lectorCsv= new LecturaProcesamientoCsv();
@@ -23,6 +34,14 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
         );
     }
 
+    /**
+    * Obtiene una copia de la lista de postulantes asociada a un campo laboral.
+    *
+    * @param campo campo laboral utilizado como clave de búsqueda.
+    * @return lista de postulantes asociados al campo. Si no existe,
+    * retorna una lista vacía.
+    */
+
     public ArrayList<Postulante> obtenerLista(String campo){
         ArrayList<Postulante> posList = mapa.get(campo);
         if(posList == null) return new ArrayList<>();
@@ -31,6 +50,13 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
     }
 
     private String mensajeError = null;
+
+    /**
+    * Elimina un postulante de las estructuras en memoria y del archivo CSV.
+    *
+    * @param postulante nombre del postulante que se desea eliminar.
+    * @trwons  ElementosNoEncontradosException si el postulante  no existe.
+    */
 
     @Override 
     public void eliminar(String postulante){
@@ -81,6 +107,15 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
     }
 
     }
+    
+    /*
+    * Agrega un postulante al sistema después de validar sus datos.
+    * La información también se almacena en el archivo CSV.
+    *
+    * @param persona postulante que se desea agregar.
+    * @throws DatosInvalidosException si alguno de los datos del postulante
+    * no cumple con las condiciones de validación.
+    */
 
     @Override
     public void agregar(Postulante persona){
@@ -136,6 +171,9 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
         }
     }
 
+    /*
+    * Muestra por consola la información de todos los postulantes registrados.
+    */
     @Override
     public void mostrar(){
         for (String key : keys) {
@@ -151,6 +189,13 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
         }
     }
 
+    /*
+    * Modifica el nombre de un postulante y actualiza el cambio
+    * en memoria y en el archivo CSV.
+    *
+    * @param nombre nombre actual del postulante.
+    * @param nombreCambiar nuevo nombre del postulante.
+    */
     @Override
     public void edicion(String nombre, String nombreCambiar){
 
@@ -193,6 +238,13 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
         System.out.println("Se ha cambiado exitosamente el nombre del postulante");
     }
 
+    /*
+    * Modifica el sueldo solicitado por un postulante para una vacante determinada.
+    *
+    * @param nombre nombre del postulante.
+    * @param sueldoSolicitadoCambiar nuevo sueldo solicitado.
+    * @param vacante campo laboral asociado al postulante.
+    */
     public void edicion(String nombre, int sueldoSolicitadoCambiar, String vacante){
         File ArchivoOriginal = new File("src/Postulantes.csv");
         File ArchivoTemporal = new File("src/Temporal.csv");
@@ -234,6 +286,12 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
         System.out.println("Se ha cambiado exitosamente el sueldo solicitado del postulante");
     }
 
+    /*
+    * Busca un postulante por su nombre recorriendo las listas almacenadas
+    * y muestra la información encontrada.
+    *
+    * @param nombrePostulante nombre del postulante que se desea buscar.
+    */
     @Override 
     public void buscarList(String nombrePostulante){
         ArrayList<Postulante> postulante = new ArrayList<>();
@@ -258,7 +316,13 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             }
         }
     }
-
+    
+    /*
+    * Busca y muestra los postulantes asociados a una vacante
+    * utilizando el mapa de postulantes.
+    *
+    * @param vacante vacante o campo laboral que se desea buscar.
+    */
     @Override
     public void buscarMap(String vacante){
         if(!mapa.containsKey(vacante)){ System.out.println("No existe la vacante");}
@@ -276,6 +340,13 @@ public class ManejoPostulantes implements InterfazGestion<Postulante> {
             }
         }
     }
+    
+    /*
+    * Obtiene el mensaje correspondiente al último error ocurrido
+    * durante una operación.
+    *
+    * @return mensaje del error o null si no se ha producido un error.
+    */
 
     public String getMensajeError() {
         return mensajeError;

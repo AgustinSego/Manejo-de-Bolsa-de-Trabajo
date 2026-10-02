@@ -1,7 +1,24 @@
 @startuml
+
 class Main
 
+class InterfazUsuario {
+    -empresa : ManejoEmpresa
+    -postulante : ManejoPostulantes
+    -v : Ventana
+    -imprimir : Impresora
+    -gestorBolsa : GestorBolsaTrabajo
+
+    +InterfazUsuario()
+    +ventana()
+    +leerEntero(..)
+    +consola()
+}
+
 class Ventana {
+    -emp : ManejoEmpresa
+    -pos : ManejoPostulantes
+
     +Ventana(...)
     +menuAgregar()
     +menuMostrar()
@@ -10,6 +27,8 @@ class Ventana {
     +menuBuscar()
     +realizarContratacion()
 }
+
+class Impresora
 
 class Postulante {
     -nombre : String
@@ -53,12 +72,20 @@ interface InterfazGestion<T> {
 }
 
 class ManejoPostulantes {
+    -lectorCsv : LecturaProcesamientoCsv
+    -keys : ArrayList<String>
+    -mapa : HashMap<String, ArrayList<Postulante>>
     -mensajeError : String
 }
 
 class ManejoEmpresa {
+    -lectorCsv : LecturaProcesamientoCsv
+    -keys : ArrayList<String>
+    -mapa : HashMap<String, ArrayList<Empresa>>
     -mensajeError : String
 }
+
+class LecturaProcesamientoCsv
 
 class GestorBolsaTrabajo {
     +porcentajeCompatibilidad(...)
@@ -69,33 +96,41 @@ class GestorBolsaTrabajo {
 class DatosInvalidosException
 class ElementosNoEncontradosException
 
+' Herencia de excepciones
+DatosInvalidosException --|> Exception
+ElementosNoEncontradosException --|> Exception
+
+' Implementación de interfaz
+ManejoPostulantes ..|> InterfazGestion
+ManejoEmpresa ..|> InterfazGestion
+
+' Manejo de excepciones
 ManejoPostulantes ..> DatosInvalidosException
 ManejoPostulantes ..> ElementosNoEncontradosException
 
 ManejoEmpresa ..> DatosInvalidosException
 ManejoEmpresa ..> ElementosNoEncontradosException
 
-DatosInvalidosException --|> Exception
-ElementosNoEncontradosException --|> Exception
+' Relaciones principales
+Main --> InterfazUsuario
 
-Main --> Ventana
-Main --> ManejoPostulantes
-Main --> ManejoEmpresa
+InterfazUsuario --> Ventana
+InterfazUsuario --> ManejoPostulantes
+InterfazUsuario --> ManejoEmpresa
+InterfazUsuario --> GestorBolsaTrabajo
+InterfazUsuario --> Impresora
 
 Ventana --> ManejoPostulantes
 Ventana --> ManejoEmpresa
 Ventana --> GestorBolsaTrabajo
 
-ManejoPostulantes ..|> InterfazGestion
-ManejoEmpresa ..|> InterfazGestion
-
 ManejoPostulantes --> Postulante
 ManejoEmpresa --> Empresa
 
+ManejoPostulantes --> LecturaProcesamientoCsv
+ManejoEmpresa --> LecturaProcesamientoCsv
+
 GestorBolsaTrabajo --> Postulante
 GestorBolsaTrabajo --> Empresa
-
-DatosInvalidosException --|> Exception
-ElementosNoEncontradosException --|> Exception
 
 @enduml

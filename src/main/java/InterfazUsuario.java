@@ -1,12 +1,38 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.InputMismatchException;
+/*
+*esta clase esta encargada de gestionar la interacione del usario y y el sistame balsa de trabajo
+* esto lo hace atraves de una ventana o de una consola
+*La clase coordina las operaciones de gestión de postulantes, empresas, vacantes y contrataciones.
+*/
 
 public class InterfazUsuario {
+    /*
+    * objeto encargado de gestionar las empresas y sus vacantes
+    */
     private ManejoEmpresa empresa;
+    /*
+    * objeto encargado de gestionar los postulantes
+    */
     private ManejoPostulantes postulante;
+    /*
+    * ventana utilizada para la interfas grafica
+    */
     private Ventana v;
+    /*
+    * objeto utilizado para mostrar los distintos menus que utilizara laa consola
+    */
     private Impresora imprimir;
+    /*
+    * objeto encargado de gestionar las funciones de bolsa de trabajo y las contrataciones
+    */
     private GestorBolsaTrabajo gestorBolsa;
+
+    /*
+    * contructur de clase
+    * encargada de inicializar los objetos encargados de empresa y postulantes
+    */
 
     public InterfazUsuario(){
         empresa = new ManejoEmpresa();
@@ -14,11 +40,40 @@ public class InterfazUsuario {
 
     }
 
+    /*
+    * inicializa la interfas grafica del sistema
+    *crea una nueva ventana utilizando los objetos de gestion empresa y postulante
+    */
     public void ventana(){
-        v = new Ventana();
+        v = new Ventana(empresa, postulante);
         v.setVisible(true);
     }
+    /**
+    * Lee un número entero ingresado por el usuario mediante un Scanner.
+    *
+    * Si el usuario ingresa un valor que no corresponde a un número entero,
+    * muestra un mensaje de error y vuelve a solicitar la entrada.
+    *
+    * @param leer objeto Scanner utilizado para leer la entrada del usuario.
+    * @return el número entero ingresado correctamente.
+    */
+    private int leerEntero(Scanner leer) {
 
+    while (true) {
+        try {
+            return leer.nextInt();
+
+        } catch (InputMismatchException e) {
+            System.out.println("Error: debe ingresar un número entero.");
+            leer.nextLine();
+        }
+    }
+    }
+    /*
+    *inicializa la interfas de la consola
+    *permite al usario acceder a las distintas funcionalidades de la bosa de trabajo mdediantea un menu de opciones
+    * una de esas opciones es mostrar,aditar,agregar,eliminar y contratacion.
+    */
     public void consola(){
         Scanner leer = new Scanner(System.in);
         imprimir = new Impresora();
@@ -46,13 +101,13 @@ public class InterfazUsuario {
                         String rut = leer.next();
 
                         System.out.println("Ingrese la experiencia del postulante(si no tiene coloque 0): ");
-                        int exp = leer.nextInt();
+                        int exp = leerEntero(leer);
 
                         System.out.println("Ingrese la edad del postulante: ");
-                        int edad = leer.nextInt();
+                        int edad = leerEntero(leer);
 
                         System.out.println("Ingrese el sueldo que solicita el postulante: ");
-                        int sueldo = leer.nextInt();
+                        int sueldo = leerEntero(leer);
 
                         Postulante p = new Postulante(nombre, vacante, rut, exp, edad, sueldo);
                         //metodo de agregacion
@@ -70,10 +125,10 @@ public class InterfazUsuario {
                         String campo = leer.next().toLowerCase();
 
                         System.out.println("Ingrese el sueldo previsto para la vacante: ");
-                        int sueldo = leer.nextInt();
+                        int sueldo = leerEntero(leer);
 
                         System.out.println("Ingrese la experiencia requerida(si no hay coloque 0): ");
-                        int experiencia = leer.nextInt();
+                        int experiencia = leerEntero(leer);
 
                         Empresa e = new Empresa(nombre, vacante, campo, sueldo, experiencia);
                         //metodo de agregacion
@@ -124,7 +179,7 @@ public class InterfazUsuario {
                             String vacante = leer.next().toLowerCase();
 
                             System.out.println("Ingrese el nuevo sueldo solicitado:");
-                            int sueldo = leer.nextInt();
+                            int sueldo = leerEntero(leer);
 
                             //metodo de edicion 2 (overload)
                             postulante.edicion(nombre, sueldo, vacante);
@@ -150,7 +205,7 @@ public class InterfazUsuario {
                             String vacante = leer.next().toLowerCase();
 
                             System.out.println("Ingrese el nuevo sueldo previsto: ");
-                            int sueldo = leer.nextInt();
+                            int sueldo = leerEntero(leer);
 
                             empresa.edicion(nombre, sueldo, vacante);
 

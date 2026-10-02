@@ -1,4 +1,12 @@
+/*
+ * Clase encargada de mostrar por consola los menús y opciones
+ * disponibles en el sistema de gestión de bolsa de trabajo.
+ */
 public class Impresora {
+
+    /*
+     * Muestra el menú principal del sistema.
+     */
 
     public void principal(){
         System.out.println("##########################################");
@@ -15,11 +23,21 @@ public class Impresora {
         System.out.println("7) Salir.");
     }
 
+     /*
+     * Muestra las opciones disponibles para agregar información.
+     */
+
     public void menuAgregar(){
         System.out.println("1) Agregar un postulante.");
         System.out.println("2) Agregar una vacante.");
         System.out.println("3) Salir.");
     }
+
+     /*
+     * Muestra las opciones disponibles para visualizar información
+     * de postulantes, empresas, vacantes e historial de contrataciones.
+     */
+
     public void menuMostrar(){
         System.out.println("1) Mostrar postulantes.");
         System.out.println("2) Mostrar Empresas.");
@@ -27,6 +45,11 @@ public class Impresora {
         System.out.println("4) Mostrar historial de contrataciones."); // NUEVA OPCIÓN
         System.out.println("5) Salir.");
     }
+
+     /*
+     * Muestra las opciones disponibles para editar información
+     * de postulantes y empresas.
+     */
     public void menuEditar(){
         System.out.println("1) Editar nombre de un postulante.");
         System.out.println("2) Editar sueldo sueldo solicitad de una vacante de un postulante.");
@@ -34,12 +57,24 @@ public class Impresora {
         System.out.println("4) Editar sueldo previsto de una empresa por vacante.");
         System.out.println("5) Salir.");
     }
+
+    /*
+     * Muestra las opciones disponibles para eliminar información
+     * de postulantes, vacantes y empresas.
+     */
+
     public void menuEliminar(){
         System.out.println("1) Eliminar un postulante.");
         System.out.println("2) Eliminar una vacante.");
         System.out.println("3) Eliminar una empresa.");
         System.out.println("4) Salir.");
     }
+    
+     /*
+     * Muestra las opciones disponibles para realizar búsquedas
+     * de postulantes, empresas y vacantes.
+     */
+
     public void menuBuscar(){
         System.out.println("1) Buscar un postulante.");
         System.out.println("2) Buscar postulantes por vacantes.");

@@ -29,18 +29,88 @@ public class Postulante {
         this.sueldoSolicitado = sueldoPrevisto;
     }
 
+    /*
+     * Establece el nombre del postulante.
+     *
+     * @param nombre nuevo nombre del postulante.
+     */
     public void setNombre(String nombre){this.nombre=nombre;}
+
+    /*
+     * Establece el RUT del postulante.
+     *
+     * @param rut nuevo RUT del postulante.
+     */
     public void setRut(String rut){this.rut=rut;}
+
+    /*
+     * Establece el campo laboral del postulante.
+     *
+     * @param campoLab nuevo campo laboral.
+     */
     public void setCampoLaboral(String campoLab){this.campoLaboral=campoLab;}
+
+    /*
+     * Establece la experiencia laboral del postulante.
+     *
+     * @param experencia nueva cantidad de experiencia laboral.
+     */
     public void setExperencia(int experencia){this.experiencia=experencia;}
+
+    /*
+     * Establece la edad del postulante.
+     *
+     * @param edad nueva edad del postulante.
+     */
     public void setEdad(int edad){this.edad=edad;}
+
+    /*
+     * Establece el sueldo solicitado por el postulante.
+     *
+     * @param sueldoPrevisto nuevo sueldo solicitado.
+     */
     public void setSueldoSolicitado(int sueldoPrevisto){this.sueldoSolicitado = sueldoPrevisto;}
 
+    /*
+     * Obtiene el nombre del postulante.
+     *
+     * @return nombre del postulante.
+     */
     public String getNombre(){return nombre;}
+    
+    /*
+     * Obtiene el RUT del postulante.
+     *
+     * @return RUT del postulante.
+     */
     public String getRut(){return rut;}
+
+    /*
+     * Obtiene el campo laboral del postulante.
+     *
+     * @return campo laboral del postulante.
+     */
     public String getCampoLaboral(){return campoLaboral;}
+
+    /*
+     * Obtiene la experiencia laboral del postulante.
+     *
+     * @return cantidad de experiencia laboral.
+     */
     public int getExperiencia(){return experiencia;}
+
+    /*
+     * Obtiene la edad del postulante.
+     *
+     * @return edad del postulante.
+     */
     public int getEdad(){return edad;}
+
+    /*
+     * Obtiene el sueldo solicitado por el postulante.
+     *
+     * @return sueldo solicitado.
+     */
     public int getSueldoSolicitado(){return sueldoSolicitado;}
     /** 
     * Muestra  la información personal del postulante.

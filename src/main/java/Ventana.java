@@ -14,37 +14,17 @@ import java.util.HashMap;
  */
 
 public class Ventana extends JFrame {
-
-    private HashMap<String, ArrayList<Empresa>> mapaEmpresa;
-    private ArrayList<String> keysTrabajo;
-
-    private HashMap<String, ArrayList<Postulante>> mapaPostulante;
-    private ArrayList<String> keysPostulantes;
-
     private ManejoPostulantes pos;
     private ManejoEmpresa emp;
     /** 
     * Crea la ventana principal y recibe las estructuras de datos 
     * utilizadas para almacenar empresas y postulantes. 
-    * @param mapaEmpresa mapa que contiene las empresas agrupadas por vacante 
-    * @param keysTrabajo lista de claves de las vacantes 
-    * @param mapaPostulante mapa que contiene los postulantes agrupados por campo laboral 
-    * @param keysPostulantes lista de claves de los postulantes 
+    * @param emp objeto encargado de gestionar las empresas y sus vacantes.
+    * @param pos objeto encargado de gestionar los postulantes.
     */
-    public Ventana(
-            HashMap<String, ArrayList<Empresa>> mapaEmpresa,
-            ArrayList<String> keysTrabajo,
-            HashMap<String, ArrayList<Postulante>> mapaPostulante,
-            ArrayList<String> keysPostulantes
-    ) {
-
-        this.mapaEmpresa = mapaEmpresa;
-        this.keysTrabajo = keysTrabajo;
-        this.mapaPostulante = mapaPostulante;
-        this.keysPostulantes = keysPostulantes;
-
-        pos = new ManejoPostulantes();
-        emp = new ManejoEmpresa();
+    public Ventana(ManejoEmpresa emp, ManejoPostulantes pos) { 
+        this.emp = emp;
+        this.pos = pos;
 
         setTitle("Gestor de Bolsa de Trabajo");
         setSize(500, 500);
@@ -455,25 +435,15 @@ public class Ventana extends JFrame {
      */
     private void mostrarVacantesDisponibles() {
 
-        StringBuilder resultado = new StringBuilder();
+    String resultado = capturarSalida(() -> {
+        emp.mostrarVacantes();
+    });
 
-        for (String vacante : keysTrabajo) {
+    if (resultado.isEmpty()) {
+        resultado = "No hay vacantes disponibles.";
+    }
 
-            resultado.append(vacante);
-            resultado.append("\n");
-        }
-
-        if (resultado.length() == 0) {
-
-            resultado.append(
-                    "No hay vacantes disponibles."
-            );
-        }
-
-        mostrarTexto(
-                "Vacantes disponibles",
-                resultado.toString()
-        );
+    mostrarTexto("Vacantes disponibles", resultado);
     }
 
     /** 
@@ -1086,88 +1056,104 @@ public class Ventana extends JFrame {
     */
     private void realizarContratacion() {
 
-        String nombreEmpresa = JOptionPane.showInputDialog(
-                this,
-                "Ingrese el nombre de la empresa que ofrece la vacante:"
-        );
+    String nombreEmpresa = JOptionPane.showInputDialog(
+            this,
+            "Ingrese el nombre de la empresa que ofrece la vacante:"
+    );
 
-        if (nombreEmpresa == null) {
-            return;
-        }
-
-        String nombreVacante = JOptionPane.showInputDialog(
-                this,
-                "Ingrese el nombre de la vacante a llenar:"
-        );
-
-        if (nombreVacante == null) {
-            return;
-        }
-
-        nombreEmpresa = nombreEmpresa.toLowerCase().trim();
-        nombreVacante = nombreVacante.toLowerCase().trim();
-
-        ArrayList<Empresa> empresas = mapaEmpresa.get(nombreVacante);
-
-        if (empresas == null || empresas.isEmpty()) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "No se encontró la vacante.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-
-            return;
-        }
-
-        Empresa empresaEncontrada = null;
-
-        for (Empresa empresa : empresas) {
-
-            if (empresa.getNombreEmpresa().equalsIgnoreCase(nombreEmpresa)) {
-
-                empresaEncontrada = empresa;
-                break;
-            }
-        }
-
-        if (empresaEncontrada == null) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "No se encontró una empresa con ese nombre para la vacante.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
-
-            return;
-        }
-
-        final Empresa empresaSeleccionada = empresaEncontrada;
-
-        GestorBolsaTrabajo gestor = new GestorBolsaTrabajo();
-
-        String resultado = capturarSalida(() -> {
-
-            gestor.realizarContratacion(
-                    empresaSeleccionada,
-                    mapaPostulante,
-                    keysPostulantes,
-                    mapaEmpresa,
-                    keysTrabajo
-            );
-        });
-
-        if (resultado.isEmpty()) {
-            resultado = "No se pudo realizar la contratación.";
-        }
-
-        mostrarTexto(
-                "Realizar Contratación",
-                resultado
-        );
+    if (nombreEmpresa == null) {
+        return;
     }
+
+    String nombreVacante = JOptionPane.showInputDialog(
+            this,
+            "Ingrese el nombre de la vacante a llenar:"
+    );
+
+    if (nombreVacante == null) {
+        return;
+    }
+
+    nombreEmpresa = nombreEmpresa.toLowerCase().trim();
+    nombreVacante = nombreVacante.toLowerCase().trim();
+
+    ArrayList<Empresa> empresas = emp.obtenerLista(nombreVacante);
+
+    if (empresas == null || empresas.isEmpty()) {
+
+        JOptionPane.showMessageDialog(
+                this,
+                "No se encontró la vacante.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+        );
+
+        return;
+    }
+
+    Empresa empresaEncontrada = null;
+
+    for (Empresa empresa : empresas) {
+
+        if (empresa.getNombreEmpresa()
+                .equalsIgnoreCase(nombreEmpresa)) {
+
+            empresaEncontrada = empresa;
+            break;
+        }
+    }
+
+    if (empresaEncontrada == null) {
+
+        JOptionPane.showMessageDialog(
+                this,
+                "No se encontró la empresa o la vacante especificada.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+        );
+
+        return;
+    }
+
+    GestorBolsaTrabajo gestor = new GestorBolsaTrabajo();
+
+    Postulante contratado = gestor.realizarContratacion(
+            empresaEncontrada,
+            pos,
+            emp
+    );
+
+    if (contratado != null) {
+
+         double compatibilidad = gestor.porcentajeCompatibilidad(
+            contratado,
+            empresaEncontrada
+    );
+
+    JOptionPane.showMessageDialog(
+            this,
+            "Postulante seleccionado: "
+            + contratado.getNombre()
+            + "\nCompatibilidad: "
+            + compatibilidad
+            + "%"
+            + "\nContratación registrada correctamente"
+            + "\nPostulante eliminado exitosamente"
+            + "\nVacante eliminada exitosamente",
+            "Contratación exitosa",
+            JOptionPane.INFORMATION_MESSAGE
+    );
+
+} else {
+
+    JOptionPane.showMessageDialog(
+            this,
+            "No se pudo realizar la contratación.",
+            "Contratación",
+            JOptionPane.WARNING_MESSAGE
+    );
+    }
+}
 
 
     /** 

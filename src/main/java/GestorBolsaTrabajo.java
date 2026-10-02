@@ -55,12 +55,8 @@ public class GestorBolsaTrabajo {
      * bolsa de trabajo.
      *
      * @param empresa: empresa que ofrece la vacante.
-     * # @param mapaPostulante: mapa que contiene los postulantes agrupados
-     *                       según la vacante.
-     * # @param keysPostulantes: lista de claves utilizadas en el mapa de postulantes.
-     * # @param mapaEmpresa: mapa que contiene las empresas agrupadas
-     *                    según la vacante.
-     * # @param keyEmpresa: lista de claves utilizadas en el mapa de empresas.
+     * # @param manejoPos: objeto encargado de gestionar postulantes
+     * # @param manejoEmp: objeto encargado de gestionar las empresas y vacante.
      * @return el postulante seleccionado si la contratación se realiza
      *         correctamente; retorna {@code null} si no existen postulantes
      *         o ninguno cumple con los requisitos.
