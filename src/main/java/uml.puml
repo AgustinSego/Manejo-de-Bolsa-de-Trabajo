@@ -1,136 +1,188 @@
 @startuml
+skinparam classAttributeIconSize 0
 
-class Main
+class Main {
+    + {static} main(args : String[]) : void
+}
 
 class InterfazUsuario {
-    -empresa : ManejoEmpresa
-    -postulante : ManejoPostulantes
-    -v : Ventana
-    -imprimir : Impresora
-    -gestorBolsa : GestorBolsaTrabajo
-
-    +InterfazUsuario()
-    +ventana()
-    +leerEntero(..)
-    +consola()
+  - emp : ManejoEmpresa
+  - postulante : ManejoPostulantes
+  - V : Ventana
+  - imprimir : Impresora
+  - gestorBolsa : GestorBolsaTrabajo
+  + InterfazUsuario()
+  + ventana() : void
+  + leerEntero() : int
+  + consola() : void
 }
 
 class Ventana {
-    -emp : ManejoEmpresa
-    -pos : ManejoPostulantes
-
-    +Ventana(...)
-    +menuAgregar()
-    +menuMostrar()
-    +menuEditar()
-    +menuEliminar()
-    +menuBuscar()
-    +realizarContratacion()
+  - emp : ManejoEmpresa
+  - pos : ManejoPostulantes
+  + Ventana()
+  + menuAgregar() : void
+  + menuMostrar() : void
+  + menuEditar() : void
+  + menuEliminar() : void
+  + menuBuscar() : void
+  + realizarContratacion() : void
+  + ...(...)
 }
 
-class Impresora
-
-class Postulante {
-    -nombre : String
-    -campoLaboral : String
-    -rut : String
-    -experiencia : int
-    -edad : int
-    -sueldoSolicitado : int
-
-    +Postulante(...)
-    +getNombre() : String
-    +getRut() : String
-    +getCampoLaboral() : String
-    +getExperiencia() : int
-    +getEdad() : int
-    +getSueldoSolicitado() : int
-}
-
-class Empresa {
-    -nombreEmpresa : String
-    -nombreVacante : String
-    -campoLaboralRequerido : String
-    -sueldo : int
-    -experenciaRequerida : int
-
-    +Empresa(...)
-    +getNombreEmpresa() : String
-    +getNombreVacante() : String
-    +getCampoLaboralRequerido() : String
-    +getSueldo() : int
-    +getExperienciaRequerida() : int
-}
-
-interface InterfazGestion<T> {
-    +eliminar(...)
-    +agregar(...)
-    +mostrar(...)
-    +edicion(...)
-    +buscarList(...)
-    +buscarMap(...)
-}
-
-class ManejoPostulantes {
-    -lectorCsv : LecturaProcesamientoCsv
-    -keys : ArrayList<String>
-    -mapa : HashMap<String, ArrayList<Postulante>>
-    -mensajeError : String
+class Impresora {
+  + principal() : void
+  + menuAgregar() : void
+  + menuMostrar() : void
+  + menuEditar() : void
+  + menuEliminar() : void
+  + menuBuscar() : void
 }
 
 class ManejoEmpresa {
-    -lectorCsv : LecturaProcesamientoCsv
-    -keys : ArrayList<String>
-    -mapa : HashMap<String, ArrayList<Empresa>>
-    -mensajeError : String
+  - lectorCsv : LecturaProcesamientoCsv
+  - keys : ArrayList<String>
+  - mapa : HashMap<String, ArrayList<Empresa>>
+  - mensajeError : String
+  + ManejoEmpresa()
+  + obtenerLista(campo : String) : ArrayList<Empresa>
+  + existe(vacante : String) : boolean
+  + mostrarVacantes() : void
+  + eliminar(vacante : String) : void
+  + eliminar(empresa : String, a : String) : void
+  + agregar(empresa : Empresa) : void
+  + mostrar() : void
+  + edicion(nombre : String, nombreCambiar : String) : void
+  + edicion(empresa : String, sueldoCambiar : int, vacante : String) : void
+  + buscarList(nombreEmpresa : String) : void
+  + buscarMap(Vacante : String) : void
+  + getMensajeError() : String
 }
 
-class LecturaProcesamientoCsv
+class ManejoPostulantes {
+  - lectorCsv : LecturaProcesamientoCsv
+  - keys : ArrayList<String>
+  - mapa : HashMap<String, ArrayList<Postulante>>
+  - mensajeError : String
+  + ManejoPostulantes()
+  + obtenerLista(campo : String) : ArrayList<Postulante>
+  + eliminar(postulante : String) : void
+  + agregar(persona : Postulante) : void
+  + mostrar() : void
+  + edicion(nombre : String, nombreCambiar : String) : void
+  + edicion(nombre : String, sueldoSolicitadoCambiar : int, vacante : String) : void
+  + buscarList(nombrePostulante : String) : void
+  + buscarMap(vacante : String) : void
+  + getMensajeError() : String
+}
 
 class GestorBolsaTrabajo {
-    +porcentajeCompatibilidad(...)
-    +realizarContratacion(...)
-    +mostrarHistorialContrataciones()
+  + GestorBolsaTrabajo()
+  + porcentajeCompatibilidad(p : Postulante, puesto : Empresa) : double
+  + realizarContratacion(empresa : Empresa, manejoPos : ManejoPostulantes, manejoEmp : ManejoEmpresa) : Postulante
+  + mostrarHistorialContrataciones() : void
 }
 
-class DatosInvalidosException
-class ElementosNoEncontradosException
+class Empresa {
+  - nombreEmpresa : String
+  - nombreVacante : String
+  - campoLaboralRequerido : String
+  - sueldo : int
+  - experienciaRequerida : int
+  + Empresa(...)
+  + getNombreEmpresa() : String
+  + getNombreVacante() : String
+  + getCampoLaboralRequerido() : String
+  + getSueldo() : int
+  + getExperienciaRequerida() : int
+  + setNombreEmpresa(nombre : String) : void
+  + setNombreVacante(vacante : String) : void
+  + setCampoLaboralRequerido(campo : String) : void
+  + setSueldo(sueldo : int) : void
+  + setExperienciaRequerida(exp : int) : void
+  + mostrarEmpresaInfoVacante() : void
+}
 
-' Herencia de excepciones
-DatosInvalidosException --|> Exception
-ElementosNoEncontradosException --|> Exception
+class Postulante {
+  - nombre : String
+  - campoLaboral : String
+  - rut : String
+  - experiencia : int
+  - edad : int
+  - sueldoSolicitado : int
+  + Postulante(...)
+  + getNombre() : String
+  + getRut() : String
+  + getCampoLaboral() : String
+  + getExperiencia() : int
+  + getEdad() : int
+  + getSueldoSolicitado() : int
+  + setNombre(nombre : String) : void
+  + setCampoLaboral(campo : String) : void
+  + setRut(rut : String) : void
+  + setExperiencia(exp : int) : void
+  + setEdad(edad : int) : void
+  + setSueldoSolicitado(sueldo : int) : void
+  + mostrarPostulanteInfoPersonal() : void
+  + mostrarPostulanteInfoVacante() : void
+}
 
-' Implementación de interfaz
-ManejoPostulantes ..|> InterfazGestion
-ManejoEmpresa ..|> InterfazGestion
+interface InterfazGestion<T> {
+  + eliminar(...) : void
+  + agregar(...) : void
+  + mostrar(...) : void
+  + edicion(...) : void
+  + buscarList(...) : void
+  + buscarMap(...) : void
+}
 
-' Manejo de excepciones
-ManejoPostulantes ..> DatosInvalidosException
-ManejoPostulantes ..> ElementosNoEncontradosException
+class LecturaProcesamientoCsv {
+  + leerCsv(...) : void
+}
 
-ManejoEmpresa ..> DatosInvalidosException
-ManejoEmpresa ..> ElementosNoEncontradosException
+class Exception {
+}
 
-' Relaciones principales
+class DatosInvalidosException {
+  + DatosInvalidosException(mensaje : String)
+}
+
+class ElementosNoEncontradosException {
+  + ElementosNoEncontradosException(mensaje : String)
+}
+
 Main --> InterfazUsuario
 
-InterfazUsuario --> Ventana
-InterfazUsuario --> ManejoPostulantes
-InterfazUsuario --> ManejoEmpresa
-InterfazUsuario --> GestorBolsaTrabajo
-InterfazUsuario --> Impresora
+InterfazUsuario --> Ventana : coordina
+InterfazUsuario --> Impresora : usa
+InterfazUsuario --> ManejoEmpresa : gestiona
+InterfazUsuario --> ManejoPostulantes : gestiona
+InterfazUsuario --> GestorBolsaTrabajo : ejecuta
 
-Ventana --> ManejoPostulantes
 Ventana --> ManejoEmpresa
-Ventana --> GestorBolsaTrabajo
+Ventana --> ManejoPostulantes
 
-ManejoPostulantes --> Postulante
-ManejoEmpresa --> Empresa
+GestorBolsaTrabajo --> ManejoPostulantes : usa
+GestorBolsaTrabajo --> ManejoEmpresa : usa
+GestorBolsaTrabajo ..> Postulante : usa
+GestorBolsaTrabajo ..> Empresa : usa
 
-ManejoPostulantes --> LecturaProcesamientoCsv
-ManejoEmpresa --> LecturaProcesamientoCsv
+ManejoEmpresa ..|> InterfazGestion : <<implementa>>
+ManejoPostulantes ..|> InterfazGestion : <<implementa>>
 
-GestorBolsaTrabajo --> Postulante
-GestorBolsaTrabajo --> Empresa
+ManejoEmpresa --> Empresa : gestiona
+ManejoEmpresa --> LecturaProcesamientoCsv : usa
+
+ManejoPostulantes --> Postulante : gestiona
+ManejoPostulantes --> LecturaProcesamientoCsv : usa
+
+ManejoEmpresa ..> DatosInvalidosException : <<lanzan>>
+ManejoEmpresa ..> ElementosNoEncontradosException : <<lanzan>>
+
+ManejoPostulantes ..> DatosInvalidosException : <<lanzan>>
+ManejoPostulantes ..> ElementosNoEncontradosException : <<lanzan>>
+
+DatosInvalidosException --|> Exception : extiende
+ElementosNoEncontradosException --|> Exception : extiende
 
 @enduml
